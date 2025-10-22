@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ${APP_NAME}-deployment
+  namespace: ${KUBERNETES_NAMESPACE}
+  labels:
+    app: ${APP_NAME}
+    service: ${APP_NAME}-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ${APP_NAME}
+      service: ${APP_NAME}-service
+  template:
+    metadata:
+      labels:
+        app: ${APP_NAME}
+        service: ${APP_NAME}-service
+    spec:
+      containers:
+        - name: ${APP_NAME}-container
+          image: ${IMAGE}
+          ports:
+            - containerPort: 80
+          envFrom:
+            - secretRef:
+                name: envs
