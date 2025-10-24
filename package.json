@@ -1,0 +1,27 @@
+{
+  "name": "obscura",
+  "version": "0.1.0",
+  "description": "A Reverse Blind dating expirence",
+  "main": "index.ts",
+  "author": "Joel Leimbacher",
+  "organization": "jl-playground",
+  "license": "Non-Commercial",
+  "module": "index.ts",
+  "type": "module",
+  "private": true,
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "scripts": {
+    "start": "bun run --watch index.ts"
+  },
+  "dependencies": {
+    "elysia": "latest",
+    "sequelize": "latest",
+    "pg": "latest",
+    "zod": "latest"
+  }
+}
