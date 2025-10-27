@@ -10,18 +10,26 @@
   "type": "module",
   "private": true,
   "devDependencies": {
-    "@types/bun": "latest"
+    "@types/bun": "latest",
+    "@types/pg": "^8.15.5"
   },
   "peerDependencies": {
     "typescript": "^5"
   },
   "scripts": {
-    "start": "bun run --watch index.ts"
+    "serve": "bun run --watch index.ts",
+    "migration:generate": "npm run typeorm migration:generate src/core/db/migrations/$npm_config_name -d src/core/db/dataSource.ts",
+    "migration:create": "npm run typeorm migration:create src/core/db/migrations/$npm_config_name -d src/core/db/dataSource.ts",
+    "migration:run": "npm run typeorm migration:run -d src/core/db/dataSource.ts"
   },
   "dependencies": {
+    "dotenv": "^17.2.3",
     "elysia": "latest",
-    "sequelize": "latest",
     "pg": "latest",
+    "reflect-metadata": "^0.2.2",
+    "sequelize": "latest",
+    "tsx": "^4.20.6",
+    "typeorm": "^0.3.27",
     "zod": "latest"
   }
 }
