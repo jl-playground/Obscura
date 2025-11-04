@@ -14,7 +14,7 @@ export class AuthController {
    * Handles the POST /auth/register request.
    * Calls the service, sets status codes, and returns a JSON response.
    */
-  public async register ({ body, set }: RegisterContext) {
+  public async register({ body, set }: RegisterContext) {
     try {
       const result = await this.authService.register(body);
       set.status = 201; // 201 Created
@@ -35,7 +35,7 @@ export class AuthController {
    * Handles the POST /auth/login request.
    * Calls the service, sets status codes, and returns a JSON response.
    */
-  public async login ({ body, set }: LoginContext) {
+  public async login({ body, set }: LoginContext) {
     try {
       const result = await this.authService.login(body);
       set.status = 200; // 200 OK
@@ -52,3 +52,4 @@ export class AuthController {
     }
   }
 }
+

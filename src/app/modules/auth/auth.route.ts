@@ -5,7 +5,7 @@ import { AuthController } from "./auth.controller";
 /**
  * Manages the registration of all authentication-related routes.
  */
-export class AuthRouter {
+export class AuthRoutes {
   private app: Elysia;
   private controller: AuthController;
 
@@ -34,20 +34,17 @@ export class AuthRouter {
   /**
    * Registers the /auth route group and its endpoints.
    */
-  public register (): void {
-    this.app.group("/auth", (group) =>
+  public register(): void {
+    this.app.group("auth", (group) =>
       group
-        .post(
-          "/register",
-          this.controller.register.bind(this.controller),
-          { body: this.schemas.register }
-        )
-        .post(
-          "/login",
-          this.controller.login.bind(this.controller),
-          { body: this.schemas.login }
-        )
-        .get('/test', () => 'Auth route works!')
+        .post("register", this.controller.register.bind(this.controller), {
+          body: this.schemas.register,
+        })
+        .post("login", this.controller.login.bind(this.controller), {
+          body: this.schemas.login,
+        })
+        .get("test", () => "Auth route works!"),
     );
   }
 }
+

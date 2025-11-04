@@ -1,22 +1,27 @@
-// src/app/middlewares/errorHandler.ts
-import type { Elysia } from "elysia";
+import { Elysia } from "elysia";
 
-export const errorHandler = (app: Elysia) => {
-  app.onError(({ error, code }) => {
-    console.error(`[${code}]`, error?.message || error);
+export class ErrorHandlerMiddleware {
+  private app: Elysia;
 
-    return new Response(
-      JSON.stringify({
-        success: false,
-        code,
-        message: error?.message || "Internal Server Error",
-      }),
-      {
-        status: 500,
-        headers: { "Content-Type": "application/json" },
-      },
-    );
-  });
+  /**
+   * Initializes the ErrorHandlerMiddleware with the main Elysia app.
+   * @param app The main Elysia app instance.
+   */
+  constructor(app: Elysia) {
+    this.app = app;
+    console.log("Registering error handler middleware");
+  }
 
-  return app; // very important — must return app
-};
+  /**
+   * Registers the global error handler.
+   */
+  public register(): void {
+    this.app.onError(({ code, error, set, path }) => {
+      console.error(`Error occurred on path: ${path}`);
+      console.error(`Error code: ${code}`);
+      console.error(`Error message: ${error}`);
+    });
+  }
+}
+
+// singelotie pattern can be applied if needed to ensure only one instance of the middleware exists
