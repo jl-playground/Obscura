@@ -1,18 +1,22 @@
-import type { MigrationInterface } from "typeorm";
-import { Table, TableForeignKey } from "typeorm";
-import type { QueryRunner } from "typeorm";
+import type { MigrationInterface, QueryRunner } from "typeorm";
+import { Table, TableForeignKey, TableIndex } from "typeorm";
 
-export class CreateUserTable1761597152693 implements MigrationInterface {
-  public async up(queryRunner: QueryRunner): Promise<void> {
-    // 1. Create the "users" table
+export class CreateInitialSchema1761597152693 implements MigrationInterface {
+  public async up (queryRunner: QueryRunner): Promise<void> {
+    // 1. Enable UUID generation extension
+    await queryRunner.query('CREATE EXTENSION IF NOT EXISTS "uuid-ossp";');
+
+    // 2. Create 'users' table
     await queryRunner.createTable(
       new Table({
-        name: "users",
+        name: "user",
         columns: [
           {
             name: "id",
-            type: "serial", // "serial" is a PostgreSQL-specific auto-incrementing integer
+            type: "uuid",
             isPrimary: true,
+            isGenerated: true,
+            generationStrategy: "uuid",
           },
           {
             name: "email",
@@ -20,96 +24,223 @@ export class CreateUserTable1761597152693 implements MigrationInterface {
             isUnique: true,
           },
           {
-            name: "passwordHash",
+            name: "password_hash",
             type: "varchar",
-          },
-          {
-            name: "first_name",
-            type: "varchar",
-            isNullable: true,
-          },
-          {
-            name: "last_name",
-            type: "varchar",
-            isNullable: true,
           },
           {
             name: "created_at",
             type: "timestamp",
-            default: "now()",
-          },
-          {
-            name: "updated_at",
-            type: "timestamp",
-            default: "now()",
+            default: "CURRENT_TIMESTAMP",
           },
         ],
       }),
-      true, // true = create table if it doesn't exist
     );
 
-    // 2. Create the "posts" table
+    // 3. Create 'profiles' table
     await queryRunner.createTable(
       new Table({
-        name: "posts",
+        name: "profile",
         columns: [
           {
             name: "id",
-            type: "serial",
+            type: "uuid",
             isPrimary: true,
+            isGenerated: true,
+            generationStrategy: "uuid",
           },
           {
-            name: "title",
+            name: "user_id",
+            type: "uuid",
+            isUnique: true, // Enforces 1-to-1 relationship
+          },
+          {
+            name: "bio",
+            type: "text",
+          },
+          {
+            name: "interests",
+            type: "text[]", // PostgreSQL array type
+          },
+          {
+            name: "photo_urls",
+            type: "text[]", // PostgreSQL array type
+          },
+          {
+            name: "silhouette_url",
             type: "varchar",
           },
+        ],
+      }),
+    );
+
+    // 4. Create 'connections' table
+    await queryRunner.createTable(
+      new Table({
+        name: "connection",
+        columns: [
           {
-            name: "content",
-            type: "text",
+            name: "id",
+            type: "uuid",
+            isPrimary: true,
+            isGenerated: true,
+            generationStrategy: "uuid",
+          },
+          {
+            name: "user_a_id",
+            type: "uuid",
+          },
+          {
+            name: "user_b_id",
+            type: "uuid",
+          },
+          {
+            name: "status",
+            type: "enum",
+            enum: ["pending", "active", "reveal_ready", "revealed", "passed"],
+            default: "'pending'",
+          },
+          {
+            name: "message_count",
+            type: "int",
+            default: 0,
+          },
+          {
+            name: "user_a_reveal_vote",
+            type: "boolean",
+            isNullable: true,
+          },
+          {
+            name: "user_b_reveal_vote",
+            type: "boolean",
+            isNullable: true,
           },
           {
             name: "created_at",
             type: "timestamp",
-            default: "now()",
-          },
-          {
-            name: "user_id", // This will be the foreign key column
-            type: "int",
-            isNullable: false,
+            default: "CURRENT_TIMESTAMP",
           },
         ],
       }),
-      true,
     );
 
-    // 3. Create the foreign key constraint
-    // This links the "posts.user_id" column to the "users.id" column
+    // Add unique index for connections
+    await queryRunner.createIndex(
+      "connection",
+      new TableIndex({
+        name: "IDX_CONNECTION_USERS",
+        columnNames: ["user_a_id", "user_b_id"],
+        isUnique: true,
+      }),
+    );
+
+    // 5. Create 'messages' table
+    await queryRunner.createTable(
+      new Table({
+        name: "message",
+        columns: [
+          {
+            name: "id",
+            type: "uuid",
+            isPrimary: true,
+            isGenerated: true,
+            generationStrategy: "uuid",
+          },
+          {
+            name: "connection_id",
+            type: "uuid",
+          },
+          {
+            name: "sender_id",
+            type: "uuid",
+          },
+          {
+            name: "content_url",
+            type: "text",
+          },
+          {
+            name: "message_type",
+            type: "enum",
+            enum: ["text", "voice"],
+            default: "'text'",
+          },
+          {
+            name: "created_at",
+            type: "timestamp",
+            default: "CURRENT_TIMESTAMP",
+          },
+        ],
+      }),
+    );
+
+    // 6. Create all Foreign Keys
     await queryRunner.createForeignKey(
-      "posts", // The table to add the constraint to
+      "profile",
       new TableForeignKey({
-        columnNames: ["user_id"], // The column in the "posts" table
-        referencedColumnNames: ["id"], // The column it references in the "users" table
-        referencedTableName: "users", // The table it references
-        onDelete: "CASCADE", // If a user is deleted, delete all their posts
+        columnNames: ["user_id"],
+        referencedColumnNames: ["id"],
+        referencedTableName: "user",
+        onDelete: "CASCADE",
+      }),
+    );
+    await queryRunner.createForeignKey(
+      "connection",
+      new TableForeignKey({
+        columnNames: ["user_a_id"],
+        referencedColumnNames: ["id"],
+        referencedTableName: "user",
+        onDelete: "CASCADE",
+      }),
+    );
+    await queryRunner.createForeignKey(
+      "connection",
+      new TableForeignKey({
+        columnNames: ["user_b_id"],
+        referencedColumnNames: ["id"],
+        referencedTableName: "user",
+        onDelete: "CASCADE",
+      }),
+    );
+    await queryRunner.createForeignKey(
+      "message",
+      new TableForeignKey({
+        columnNames: ["connection_id"],
+        referencedColumnNames: ["id"],
+        referencedTableName: "connection",
+        onDelete: "CASCADE",
+      }),
+    );
+    await queryRunner.createForeignKey(
+      "message",
+      new TableForeignKey({
+        columnNames: ["sender_id"],
+        referencedColumnNames: ["id"],
+        referencedTableName: "user",
+        onDelete: "CASCADE",
       }),
     );
   }
 
-  public async down(queryRunner: QueryRunner): Promise<void> {
-    // To reverse the migration, we drop everything in reverse order
+  public async down (queryRunner: QueryRunner): Promise<void> {
+    // Drop in reverse order
+    const tables = ["message", "connection", "profile", "user"];
+    for (const table of tables) {
+      const tableRef = await queryRunner.getTable(table);
+      if (tableRef) {
+        // Drop all foreign keys first
+        await queryRunner.dropForeignKeys(table, tableRef.foreignKeys);
+      }
+    }
 
-    // 1. Drop the foreign key
-    // We must find the constraint by its name. TypeORM usually follows this convention:
-    // "FK_{columnName}_{referencedTableName}" but it's safer to find it.
-    const table = await queryRunner.getTable("posts");
-    const foreignKey = table!.foreignKeys.find(
-      (fk) => fk.columnNames.indexOf("user_id") !== -1,
-    );
-    if (foreignKey) await queryRunner.dropForeignKey("posts", foreignKey);
+    // Drop indices
+    await queryRunner.dropIndex("connection", "IDX_CONNECTION_USERS");
 
-    // 2. Drop the "posts" table
-    await queryRunner.dropTable("posts");
+    // Drop tables
+    await queryRunner.dropTable("message");
+    await queryRunner.dropTable("connection");
+    await queryRunner.dropTable("profile");
+    await queryRunner.dropTable("user");
 
-    // 3. Drop the "users" table
-    await queryRunner.dropTable("users");
+    // Drop the extension
+    await queryRunner.query('DROP EXTENSION IF EXISTS "uuid-ossp";');
   }
 }

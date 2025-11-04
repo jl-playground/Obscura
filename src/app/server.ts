@@ -1,11 +1,12 @@
 import { Elysia } from "elysia";
 import { errorHandler } from "@/app/middlewares/errorHandler";
-import { registerRoutes } from "@/app/routes";
+import { AppRouter } from "@/app/routes";
 
 const app = new Elysia();
 
-errorHandler(app); // ✅ register error handler
-registerRoutes(app); // ✅ register all routes
+errorHandler(app);
+const router = new AppRouter(app);
+router.registerAll();
 
 app.get("/", () => "Server running ✅");
 
