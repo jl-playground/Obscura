@@ -1,6 +1,6 @@
 import { Elysia } from "elysia";
 import { errorHandler } from "@/app/middlewares/errorHandler";
-import { AppRouter } from "@/app/routes";
+import { AppRouter } from "@/core/routes";
 
 const app = new Elysia();
 
