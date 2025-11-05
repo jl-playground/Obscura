@@ -4,14 +4,18 @@ import { AuthRoutes } from "@/app/modules/auth/auth.route";
 import { ProfileRoutes } from "@/app/modules/profile/profile.route";
 import { ConnectionRoutes } from "@/app/modules/connection/connection.route";
 import { ChatRoutes } from "@/app/modules/chat/chat.route";
+import { MatchingRoutes } from "@/app/modules/matching/matching.route";
+import { QuestionRoutes } from "@/app/modules/question/question.routes";
 
 export class AppRouter {
   private app: Elysia;
   private authRoutes: AuthRoutes;
   private userRoutes: UserRoutes;
-  private profileRoutes: ProfileRoutes;
-  private connectionRoutes: ConnectionRoutes;
   private chatRoutes: ChatRoutes;
+  private profileRoutes: ProfileRoutes;
+  private questionRoutes: QuestionRoutes;
+  private matchningRoutes: MatchingRoutes;
+  private connectionRoutes: ConnectionRoutes;
 
   /**
    * Initializes the main AppRouter with the Elysia app instance.
@@ -21,9 +25,11 @@ export class AppRouter {
     this.app = app;
     this.authRoutes = new AuthRoutes(app);
     this.userRoutes = new UserRoutes(app);
-    this.profileRoutes = new ProfileRoutes(app);
-    this.connectionRoutes = new ConnectionRoutes(app);
     this.chatRoutes = new ChatRoutes(app);
+    this.profileRoutes = new ProfileRoutes(app);
+    this.questionRoutes = new QuestionRoutes(app);
+    this.connectionRoutes = new ConnectionRoutes(app);
+    this.matchningRoutes = new MatchingRoutes(app);
   }
 
   /**
@@ -34,10 +40,12 @@ export class AppRouter {
   public registerAll(): Elysia {
     this.authRoutes.register();
     this.userRoutes.register();
-    this.profileRoutes.register();
-    this.connectionRoutes.register();
     this.chatRoutes.register();
     this.registerGlobalRoutes();
+    this.profileRoutes.register();
+    this.questionRoutes.register();
+    this.matchningRoutes.register();
+    this.connectionRoutes.register();
     return this.app;
   }
 
