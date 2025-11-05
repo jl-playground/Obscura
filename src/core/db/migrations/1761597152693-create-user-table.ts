@@ -51,19 +51,22 @@ export class CreateInitialSchema1761597152693 implements MigrationInterface {
           {
             name: "user_id",
             type: "uuid",
-            isUnique: true, // Enforces 1-to-1 relationship
+            isUnique: true,
           },
           {
             name: "bio",
             type: "text",
+            default: "''", // <-- ADDED: SQL empty string literal
           },
           {
             name: "interests",
-            type: "text[]", // PostgreSQL array type
+            type: "text[]",
+            default: "'{}'", // <-- ADDED: SQL empty array literal
           },
           {
             name: "photo_urls",
-            type: "text[]", // PostgreSQL array type
+            type: "text[]",
+            default: "'{}'", // <-- ADDED: SQL empty array literal
           },
           {
             name: "silhouette_url",
@@ -71,9 +74,7 @@ export class CreateInitialSchema1761597152693 implements MigrationInterface {
           },
         ],
       }),
-    );
-
-    // 4. Create 'connections' table
+    ); // 4. Create 'connections' table
     await queryRunner.createTable(
       new Table({
         name: "connection",
@@ -244,3 +245,4 @@ export class CreateInitialSchema1761597152693 implements MigrationInterface {
     await queryRunner.query('DROP EXTENSION IF EXISTS "uuid-ossp";');
   }
 }
+

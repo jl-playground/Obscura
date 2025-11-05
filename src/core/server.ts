@@ -1,17 +1,9 @@
 import { Elysia, t } from "elysia";
 import { ErrorHandlerMiddleware } from "@/app/middlewares/errorHandler";
 import { AppRouter } from "@/core/routes";
-import { SocketHandler } from "@/app/modules/chat/chat.socket";
-import { dataSource } from "@/core/db/dataSource"; // <-- 2. MUST import dataSource
+import { SocketHandler } from "@/app/features/chat/chat.socket";
 
-// --- 3. Initialize Database FIRST ---
-try {
-  await dataSource.initialize();
-  console.log("Data Source has been initialized!");
-} catch (err) {
-  console.error("Error during Data Source initialization:", err);
-  process.exit(1); // Exit if DB fails
-}
+
 
 // --- 4. Create and Configure App ---
 const app = new Elysia();

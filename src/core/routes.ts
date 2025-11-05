@@ -1,11 +1,11 @@
 import type { Elysia } from "elysia";
-import { UserRoutes } from "@/app/modules/user/user.route";
-import { AuthRoutes } from "@/app/modules/auth/auth.route";
-import { ProfileRoutes } from "@/app/modules/profile/profile.route";
-import { ConnectionRoutes } from "@/app/modules/connection/connection.route";
-import { ChatRoutes } from "@/app/modules/chat/chat.route";
-import { MatchingRoutes } from "@/app/modules/matching/matching.route";
-import { QuestionRoutes } from "@/app/modules/question/question.routes";
+import { UserRoutes } from "@/app/features/user/user.route";
+import { AuthRoutes } from "@/app/features/auth/auth.route";
+import { ProfileRoutes } from "@/app/features/profile/profile.route";
+import { ConnectionRoutes } from "@/app/features/connection/connection.route";
+import { ChatRoutes } from "@/app/features/chat/chat.route";
+import { MatchingRoutes } from "@/app/features/matching/matching.route";
+import { QuestionRoutes } from "@/app/features/question/question.routes";
 
 export class AppRouter {
   private app: Elysia;
@@ -37,7 +37,7 @@ export class AppRouter {
    * This is the single entry point for application routing.
    * @returns The Elysia app instance with all routes registered.
    */
-  public registerAll(): Elysia {
+  public registerAll (): Elysia {
     this.authRoutes.register();
     this.userRoutes.register();
     this.chatRoutes.register();
@@ -52,7 +52,7 @@ export class AppRouter {
   /**
    * A private method for registering global, non-module routes.
    */
-  private registerGlobalRoutes(): void {
+  private registerGlobalRoutes (): void {
     this.app.get("/health", ({ set }) => {
       set.status = 200;
       return {
