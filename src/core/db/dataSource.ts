@@ -14,7 +14,7 @@ export const dataSource = new DataSource({
   synchronize: false, // Always false for production
   logging: true,
 
-  entities: ["src/app/features/**/*.entity.ts", "src/core/db/entities/*.ts"],
+  entities: ["src/core/db/entities/*.ts"],
   migrations: ["src/core/db/migrations/*.ts"],
 });
 

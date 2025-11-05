@@ -12,21 +12,21 @@ export class Message {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
-  @Column("uuid")
+  @Column({ type: "uuid" })
   connection_id: string;
 
   @ManyToOne('connection', (connection: Connection) => connection.messages)
   @JoinColumn({ name: "connection_id" })
   connection: Connection;
 
-  @Column("uuid")
+  @Column({ type: "uuid" })
   sender_id: string;
 
   @ManyToOne('user', (user: User) => user.messages)
   @JoinColumn({ name: "sender_id" })
   sender: User;
 
-  @Column("text")
+  @Column({ type: "text" })
   content_url: string;
 
   @Column({

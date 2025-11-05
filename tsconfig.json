@@ -3,7 +3,7 @@
     // Environment setup & latest features
     "lib": ["ESNext"],
     "target": "ESNext",
-    "module": "Preserve",
+    "module": "ESNext",
     "moduleDetection": "force",
     "jsx": "react-jsx",
     "allowJs": true,
@@ -37,5 +37,5 @@
       "@/*": ["*"]
     }
   },
-  "include": ["src", "data-source.ts", "data-source.ts"]
+  "include": ["src", "index.ts"]
 }

@@ -16,23 +16,23 @@ export class Connection {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
-  @Column("uuid")
+  @Column({ type: "uuid" })
   user_a_id: string;
 
   // --- RELATION FIX ---
   // No explicit ': User' type annotation.
   @ManyToOne('user', (user: User) => user.connections_a)
   @JoinColumn({ name: "user_a_id" })
-  user_a: User; // Type 'User' is inferred
+  user_a: User;
 
-  @Column("uuid")
+  @Column({ type: "uuid" })
   user_b_id: string;
 
   // --- RELATION FIX ---
   // No explicit ': User' type annotation.
   @ManyToOne('user', (user: User) => user.connections_b)
   @JoinColumn({ name: "user_b_id" })
-  user_b: User; // Type 'User' is inferred
+  user_b: User;
 
   @Column({
     type: "enum",
@@ -41,7 +41,7 @@ export class Connection {
   })
   status: ConnectionStatus;
 
-  @Column({ default: 0 })
+  @Column({ type: "int", default: 0 })
   message_count: number;
 
   @Column({ type: "boolean", nullable: true })

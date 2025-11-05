@@ -11,19 +11,19 @@ import type { User } from "@/core/db/entities/user.entity";
 import type { Question } from "@/core/db/entities/question.entity";
 
 @Entity("user_answer")
-@Index(["user_id", "question_id"], { unique: true }) // A user can only answer a question once
+@Index(["user_id", "question_id"], { unique: true })
 export class UserAnswer {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
-  @Column("uuid")
+  @Column({ type: "uuid" })
   user_id: string;
 
-  @Column("uuid")
+  @Column({ type: "uuid" })
   question_id: string;
 
-  @Column("varchar")
-  answer_value: string; // e.g., "4" (for scale) or "option_b" (for choice)
+  @Column({ type: "varchar" })
+  answer_value: string;
 
   @ManyToOne("user", (user: User) => user.id)
   @JoinColumn({ name: "user_id" })

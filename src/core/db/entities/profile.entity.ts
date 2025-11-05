@@ -12,25 +12,22 @@ export class Profile {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
-  @Column("uuid")
+  @Column({ type: "uuid" })
   user_id: string;
 
   @OneToOne("user", (user: User) => user.profile)
   @JoinColumn({ name: "user_id" })
   user: User;
 
-  // --- FIX IS HERE ---
-  @Column("text", { default: "" })
+  @Column({ type: "text", default: "" })
   bio: string;
 
-  // --- FIX IS HERE ---
-  @Column("simple-array", { default: [] })
+  @Column({ type: "simple-array", default: [] })
   interests: string[];
 
-  // --- FIX IS HERE ---
-  @Column("simple-array", { default: [] })
+  @Column({ type: "simple-array", default: [] })
   photo_urls: string[];
 
-  @Column()
+  @Column({ type: "varchar" })
   silhouette_url: string;
 }
