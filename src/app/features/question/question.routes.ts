@@ -18,23 +18,16 @@ export class QuestionRoutes {
 
   public register(): void {
     this.app.group("/questions", (group) =>
-      group
-        // All question routes MUST be protected.
-        .use(authMiddleware)
+      group.guard({ beforeHandle: authMiddleware }, (guarded) =>
+        guarded
+          // Get the daily batch of questions
+          .get("/daily", (ctx) => this.controller.getDailyQuestions(ctx as any))
 
-        // Endpoint to get a batch of questions
-        .get("/daily", (context: any) =>
-          this.controller.getDailyQuestions(context),
-        )
-
-        // Endpoint to submit an answer
-        .post(
-          "/answer",
-          (context: any) => this.controller.submitAnswer(context),
-          {
+          // Submit an answer
+          .post("/answer", (ctx) => this.controller.submitAnswer(ctx as any), {
             body: SubmitAnswerSchema,
-          },
-        ),
+          }),
+      ),
     );
   }
 }

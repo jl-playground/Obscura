@@ -2,9 +2,6 @@ import type { Elysia } from "elysia";
 import { MatchingController } from "./matching.controller";
 import { authMiddleware } from "../auth/auth.middleware";
 
-/**
- * Manages the registration of all matching-related routes.
- */
 export class MatchingRoutes {
   private app: Elysia;
   private controller: MatchingController;
@@ -18,13 +15,10 @@ export class MatchingRoutes {
   public register(): void {
     this.app.group("/matching", (group) =>
       group
-        // All matching routes MUST be protected.
-        .use(authMiddleware)
-
-        // The main endpoint to get the user's daily batch
-        .get("/batch", (context) =>
-          this.controller.getDailyBatch(context as any),
-        ),
+        .guard({
+          beforeHandle: authMiddleware, // <-- don't wrap in async or call it manually
+        })
+        .get("/batch", (ctx) => this.controller.getDailyBatch(ctx as any)),
     );
   }
 }

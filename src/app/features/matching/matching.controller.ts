@@ -11,10 +11,12 @@ export class MatchingController {
    * Handles GET /matching/batch
    * Fetches the user's daily batch of profiles.
    */
-  public async getDailyBatch (context: AuthContext) {
+  public async getDailyBatch(context: AuthContext) {
     const { auth, set } = context;
+
     try {
       const result = await this.service.getDailyBatch(auth);
+
       set.status = 200; // OK
 
       // We must filter this data before sending.

@@ -15,22 +15,20 @@ export class ConnectionRoutes {
 
   public register(): void {
     this.app.group("/connections", (group) =>
-      group
-        .use(authMiddleware) // All routes are protected
-
-        .post(
-          "/",
-          (context) => this.controller.createConnection(context as any),
-          {
+      group.guard({ beforeHandle: authMiddleware }, (guarded) =>
+        guarded
+          // Create a new connection
+          .post("/", (ctx) => this.controller.createConnection(ctx as any), {
             body: CreateConnectionSchema,
-          },
-        )
+          })
 
-        .patch(
-          "/:id/reveal",
-          (context) => this.controller.handleRevealVote(context as any),
-          { body: RevealVoteSchema },
-        ),
+          // Reveal vote for a specific connection
+          .patch(
+            "/:id/reveal",
+            (ctx) => this.controller.handleRevealVote(ctx as any),
+            { body: RevealVoteSchema },
+          ),
+      ),
     );
   }
 }

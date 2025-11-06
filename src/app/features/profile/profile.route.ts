@@ -17,27 +17,23 @@ export class ProfileRoutes {
     console.log("Registering profile routes");
   }
 
-  public register (): void {
+  public register(): void {
     this.app.group("/profile", (group) =>
       group
-        .use(authMiddleware)
-        .get(
-          "/me",
-          (context) => this.controller.getMyProfile(context as any)
+        // Protected sub-routes
+        .guard({ beforeHandle: authMiddleware }, (guarded) =>
+          guarded
+            .get("/me", (ctx) => this.controller.getMyProfile(ctx as any))
+            .patch(
+              "/me",
+              (ctx) => this.controller.updateMyProfile(ctx as any),
+              { body: UpdateProfileSchema },
+            ),
         )
-        .patch(
-          "/me",
-          (context) => this.controller.updateMyProfile(context as any),
-          { body: UpdateProfileSchema }
-        )
-        .get(
-          "/:id",
-          (context: any) => this.controller.getProfileById(context as GetByIdContext)
-        )
-        .get(
-          "/test",
-          () => "Profile route works!"
-        )
+
+        // Public routes
+        .get("/:id", (ctx) => this.controller.getProfileById(ctx as any))
+        .get("/test", () => "Profile route works!"),
     );
   }
 }

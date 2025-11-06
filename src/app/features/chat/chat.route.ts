@@ -18,22 +18,18 @@ export class ChatRoutes {
 
   public register(): void {
     this.app.group("/chat", (group) =>
-      group
-        .use(authMiddleware) // All chat routes are protected
-
-        // Send a new message
-        .post(
-          "/message",
-          (context) => this.controller.sendMessage(context as any),
-          {
+      group.guard({ beforeHandle: authMiddleware }, (guarded) =>
+        guarded
+          // Send a new message
+          .post("/message", (ctx) => this.controller.sendMessage(ctx as any), {
             body: SendMessageSchema,
-          },
-        )
+          })
 
-        // Get all messages for a connection
-        .get("/:connectionId", (context) =>
-          this.controller.getMessages(context as any),
-        ),
+          // Get all messages for a connection
+          .get("/:connectionId", (ctx) =>
+            this.controller.getMessages(ctx as any),
+          ),
+      ),
     );
   }
 }
