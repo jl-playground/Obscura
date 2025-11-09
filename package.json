@@ -1,0 +1,41 @@
+{
+  "name": "obscura",
+  "version": "0.1.0",
+  "description": "A Reverse Blind dating expirence",
+  "main": "index.ts",
+  "author": "Joel Leimbacher",
+  "organization": "jl-playground",
+  "license": "Non-Commercial",
+  "module": "index.ts",
+  "type": "module",
+  "private": true,
+  "devDependencies": {
+    "@types/bun": "latest",
+    "@types/pg": "^8.15.5"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "scripts": {
+    "serve": "bun run --watch index.ts",
+    "migration:generate": "tsx node_modules/.bin/typeorm migration:generate src/core/db/migrations/$npm_config_name -d src/core/db/dataSource.ts",
+    "migration:create": "tsx node_modules/.bin/typeorm migration:create src/core/db/migrations/InitialSchema",
+    "migration:run": "tsx node_modules/.bin/typeorm migration:run -d src/core/db/dataSource.ts",
+    "migration:revert": "tsx node_modules/.bin/typeorm migration:revert -d src/core/db/dataSource.ts",
+    "migration:drop": "tsx node_modules/.bin/typeorm schema:drop -d src/core/db/dataSource.ts",
+    "migration:resetDb": "bun run migration:drop && bun run migration:create && bun run migration:run"
+  },
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "dotenv": "^17.2.3",
+    "elysia": "latest",
+    "jsonwebtoken": "^9.0.2",
+    "pg": "latest",
+    "reflect-metadata": "^0.2.2",
+    "sequelize": "latest",
+    "tsx": "^4.20.6",
+    "typeorm": "^0.3.27",
+    "uuid": "^13.0.0",
+    "zod": "latest"
+  }
+}
