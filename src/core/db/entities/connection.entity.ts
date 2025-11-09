@@ -1,13 +1,24 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, CreateDateColumn, Index, JoinColumn, OneToMany } from "typeorm";
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  OneToMany,
+  OneToOne,
+  CreateDateColumn,
+  Index,
+  JoinColumn,
+} from "typeorm";
 import type { User } from "./user.entity";
 import type { Message } from "./message.entity";
+import type { Room } from "./room.entity";
 
 export enum ConnectionStatus {
   PENDING = "pending",
   ACTIVE = "active",
   REVEAL_READY = "reveal_ready",
   REVEALED = "revealed",
-  PASSED = "passed"
+  PASSED = "passed",
 }
 
 @Entity("connection")
@@ -19,41 +30,42 @@ export class Connection {
   @Column({ type: "uuid" })
   user_a_id: string;
 
-  // --- RELATION FIX ---
-  // No explicit ': User' type annotation.
-  @ManyToOne('user', (user: User) => user.connections_a)
+  @ManyToOne("user", (user: User) => user.connections_a)
   @JoinColumn({ name: "user_a_id" })
   user_a: User;
 
   @Column({ type: "uuid" })
   user_b_id: string;
 
-  // --- RELATION FIX ---
-  // No explicit ': User' type annotation.
-  @ManyToOne('user', (user: User) => user.connections_b)
+  @ManyToOne("user", (user: User) => user.connections_b)
   @JoinColumn({ name: "user_b_id" })
   user_b: User;
 
   @Column({
     type: "enum",
     enum: ConnectionStatus,
-    default: ConnectionStatus.PENDING
+    default: ConnectionStatus.PENDING,
   })
   status: ConnectionStatus;
 
   @Column({ type: "int", default: 0 })
   message_count: number;
 
+  //TODO: remove this bs
   @Column({ type: "boolean", nullable: true })
   user_a_reveal_vote: boolean | null;
 
+  //TODO: remove this bs
   @Column({ type: "boolean", nullable: true })
   user_b_reveal_vote: boolean | null;
 
   @CreateDateColumn()
   created_at: Date;
 
-  // Relation for messages
-  @OneToMany('message', (message: Message) => message.connection)
-  messages: Message[]; // Type 'Message[]' is inferred
+  // --- NEW RELATION ---
+  @OneToOne("room", (room: Room) => room.connection)
+  room: Room;
+
+  @OneToMany("message", (message: Message) => message.connection)
+  messages: Message[];
 }

@@ -18,7 +18,12 @@ export class MatchingRoutes {
         .guard({
           beforeHandle: authMiddleware, // <-- don't wrap in async or call it manually
         })
-        .get("/batch", (ctx) => this.controller.getDailyBatch(ctx as any)),
+        .get("/batch", (ctx) => this.controller.getDailyBatch(ctx as any))
+        .post("/pass", (ctx) => this.controller.passProfile(ctx as any))
+        .post("/match", (ctx) => this.controller.matchProfile(ctx as any))
+        .post("/revertAllPasses", (ctx) =>
+          this.controller.revertAllPasses(ctx as any),
+        ),
     );
   }
 }

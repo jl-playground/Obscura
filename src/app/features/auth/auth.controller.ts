@@ -5,6 +5,7 @@ import type { Context } from "elysia"; // For 'set' type
 // We define the types for the handler context
 type RegisterContext = { body: RegisterDto; set: Context["set"] };
 type LoginContext = { body: LoginDto; set: Context["set"] };
+type ValidateTokenContext = { body: any; set: Context["set"] };
 
 export class AuthController {
   // The service is instantiated as a private member
@@ -22,6 +23,25 @@ export class AuthController {
       console.log(result);
 
       set.status = 201; // 201 Created
+      return {
+        status: "success",
+        data: result,
+      };
+    } catch (error: any) {
+      set.status = 409; // 409 Conflict (e.g., user already exists)
+      return {
+        status: "error",
+        message: error.message,
+      };
+    }
+  }
+
+  public async validateToken({ body, set }: ValidateTokenContext) {
+    try {
+      const result = await this.authService.validateToken(body);
+      console.log(result);
+
+      set.status = 201;
       return {
         status: "success",
         data: result,

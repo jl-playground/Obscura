@@ -8,6 +8,8 @@ const JWT_SECRET = process.env.JWT_SECRET || "OBSCURA_DEV_SECRET_KEY";
  */
 export async function authMiddleware(ctx: any) {
   const { headers, set } = ctx;
+  console.log(ctx);
+
   const authHeader = headers.authorization;
 
   if (!authHeader || !authHeader.startsWith("Bearer ")) {

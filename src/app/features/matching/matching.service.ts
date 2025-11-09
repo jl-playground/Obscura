@@ -1,13 +1,20 @@
 import { UserRepository } from "@/app/features/user/user.repository";
 import { ProfileRepository } from "@/app/features/profile/profile.repository";
 import { ConnectionRepository } from "@/app/features/connection/connection.repository";
-import type { AuthPayload } from "@/app/features/auth/auth.dto";
+import type {
+  AuthPayload,
+  PassPayload,
+  MatchPayload,
+} from "@/app/features/auth/auth.dto";
 import { In, Not } from "typeorm";
 import { UserAnswerRepository } from "./userAnswer.repository";
 import { DailyBatchRepository } from "./dailyBatch.repository";
 import type { Profile } from "../../../core/db/entities/profile.entity";
 import type { UserAnswer } from "../../../core/db/entities/userAnswer.entity";
 import { QuestionType } from "../../../core/db/entities/question.entity";
+import { ConnectionStatus } from "@/core/db/entities/connection.entity";
+import { RoomRepository } from "../chat/room.repository";
+import { v4 as uuidv4 } from "uuid";
 
 // --- Configuration for our algorithm ---
 const DAILY_BATCH_SIZE = 10;
@@ -24,14 +31,15 @@ export class MatchingService {
   private profileRepo = ProfileRepository;
   private connRepo = ConnectionRepository;
   private answerRepo = UserAnswerRepository;
-  private batchRepo = DailyBatchRepository; // <-- 2. Use new repo
+  private batchRepo = DailyBatchRepository;
+  private roomRepo = RoomRepository;
 
   /**
    * The main public method.
    * Fetches the user's valid batch from the cache (daily_batch table).
    * If no valid batch exists, it generates, saves, and returns a new one.
    */
-  public async getDailyBatch (auth: AuthPayload): Promise<Profile[]> {
+  public async getDailyBatch(auth: AuthPayload): Promise<Profile[]> {
     const { userId } = auth;
 
     // --- 3. FAST PATH: Check for an existing, valid batch ---
@@ -53,10 +61,89 @@ export class MatchingService {
     return newBatchProfiles;
   }
 
+  async passProfile(
+    req: PassPayload,
+  ): Promise<{ status: string; code: number }> {
+    const { userId, passedProfileId } = req;
+
+    const batch = await DailyBatchRepository.findValidBatchByUserId(userId);
+
+    if (!batch) throw new Error("No active daily batch found");
+
+    batch.matched_profile_ids = (batch.matched_profile_ids || []).filter(
+      (e) => e !== passedProfileId,
+    );
+
+    if (!batch.passed_profile_ids.includes(passedProfileId)) {
+      batch.passed_profile_ids.push(passedProfileId);
+    }
+
+    await DailyBatchRepository.save(batch);
+
+    return { status: "success", code: 200 };
+  }
+
+  async matchProfile(
+    req: MatchPayload,
+  ): Promise<{ status: string; code: number }> {
+    const { userId, matchedProfileId } = req;
+
+    const user = await this.userRepo.findOneBy({ id: userId });
+    const likedUser = await this.profileRepo.findOne({
+      where: { id: matchedProfileId },
+      relations: ["user"],
+    });
+
+    if (!user) throw new Error("User not found");
+    if (!likedUser) throw new Error("Matched profile user not found");
+
+    const connection = this.connRepo.create({
+      id: uuidv4(),
+      user_a_id: userId,
+      user_b_id: likedUser.user.id,
+      status: ConnectionStatus.ACTIVE,
+    });
+
+    console.log(connection);
+
+    const room = this.roomRepo.create({
+      connection_id: connection.id,
+      room_code: uuidv4(),
+      created_at: new Date(),
+    });
+
+    await this.connRepo.save(connection);
+    await this.roomRepo.save(room);
+
+    return { status: "success", code: 200 };
+  }
+
+  async revertAllPasses(
+    req: PassPayload,
+  ): Promise<{ status: string; code: number }> {
+    const { userId } = req;
+
+    const batch = await DailyBatchRepository.findValidBatchByUserId(userId);
+
+    if (!batch) throw new Error("No active daily batch found");
+
+    batch.matched_profile_ids = [
+      ...batch.matched_profile_ids,
+      ...batch.passed_profile_ids,
+    ];
+
+    batch.passed_profile_ids = [];
+    console.log(batch);
+
+    await DailyBatchRepository.save(batch);
+
+    return { status: "success", code: 200 };
+  }
+
   /**
    * Runs the expensive scoring algorithm and saves the result.
    */
-  private async _generateAndSaveNewBatch (
+  private async _generateAndSaveNewBatch(
     auth: AuthPayload,
   ): Promise<Profile[]> {
     const { userId, profileId } = auth;
@@ -67,6 +154,10 @@ export class MatchingService {
       throw new Error("Your profile could not be found.");
     }
     const myAnswers = await this.answerRepo.findAllByUserId(userId);
+    console.log(
+      `[MatchingService] Found ${myAnswers} answers for user ${userId}`,
+    );
+
     const myInterests = myProfile.interests || [];
 
     // 2. Get the "Pool" of all potential matches
@@ -103,6 +194,9 @@ export class MatchingService {
       return []; // No matches found
     }
 
+    console.log(
+      `\x1B[32mfinalProfileIds -------------------- ${finalProfileIds}\x1B[0m`,
+    );
     // 5. Save the new batch to our table
     await this.batchRepo.save(
       this.batchRepo.create({
@@ -120,7 +214,7 @@ export class MatchingService {
   // --- PRIVATE ALGORITHM HELPERS ---
   // (These are unchanged from my previous generation)
 
-  private async _getMatchingPool (userId: string): Promise<Profile[]> {
+  private async _getMatchingPool(userId: string): Promise<Profile[]> {
     const connections = await this.connRepo.find({
       where: [{ user_a_id: userId }, { user_b_id: userId }],
     });
@@ -139,7 +233,7 @@ export class MatchingService {
     });
   }
 
-  private _calculateCompatibilityScore (
+  private _calculateCompatibilityScore(
     myAnswers: UserAnswer[],
     theirAnswers: UserAnswer[],
     myInterests: string[],
@@ -153,7 +247,7 @@ export class MatchingService {
     return interestScore * WEIGHT_INTERESTS + questionScore * WEIGHT_QUESTIONS;
   }
 
-  private _calculateInterestScore (
+  private _calculateInterestScore(
     myInterests: string[],
     theirInterests: string[],
   ): number {
@@ -166,7 +260,7 @@ export class MatchingService {
     return intersection.size / union.size;
   }
 
-  private _calculateQuestionScore (
+  private _calculateQuestionScore(
     myAnswers: UserAnswer[],
     theirAnswers: UserAnswer[],
   ): number {

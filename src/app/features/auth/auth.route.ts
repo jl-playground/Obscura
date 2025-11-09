@@ -43,8 +43,16 @@ export class AuthRoutes {
         .post("login", this.controller.login.bind(this.controller), {
           body: this.schemas.login,
         })
+        .post(
+          "validateToken",
+          this.controller.validateToken.bind(this.controller),
+          {
+            body: t.Object({
+              token: t.String(),
+            }),
+          },
+        )
         .get("test", () => "Auth route works!"),
     );
   }
 }
-

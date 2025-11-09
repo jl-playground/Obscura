@@ -18,7 +18,7 @@ export class AuthService {
    * Registers a new user and creates their associated profile.
    * This is the core "Sign Up" logic for Obscura.
    */
-  public async register (dto: RegisterDto) {
+  public async register(dto: RegisterDto) {
     // 1. Check if user already exists
     console.log(`Registering user with email: ${dto.email}`);
 
@@ -46,11 +46,30 @@ export class AuthService {
     // 5. Generate and return a token
     return this.generateAuthToken(savedUser, newProfile);
   }
+  public async validateToken(dto: { token: string }) {
+    const JWT_SECRET = process.env.JWT_SECRET || "OBSCURA_DEV_SECRET_KEY";
+
+    try {
+      const decoded = jwt.verify(dto.token, JWT_SECRET);
+      console.log("decoded jwt", decoded);
+
+      await this.userRepository.findOneByOrFail({ id: decoded.userId });
+      return {
+        valid: true,
+        payload: decoded,
+      };
+    } catch (error) {
+      throw {
+        valid: false,
+        payload: null,
+      };
+    }
+  }
 
   /**
    * Logs in an existing user and returns a JWT.
    */
-  public async login (dto: LoginDto) {
+  public async login(dto: LoginDto) {
     // 1. Find the user by email
     const user = await this.userRepository.findByEmailWithProfile(dto.email);
     if (!user) {
@@ -79,7 +98,7 @@ export class AuthService {
   /**
    * Generates a signed JSON Web Token (JWT) for an authenticated user.
    */
-  private generateAuthToken (user: User, profile: Profile) {
+  private generateAuthToken(user: User, profile: Profile) {
     const payload: AuthPayload = {
       userId: user.id,
       profileId: profile.id,
@@ -101,4 +120,3 @@ export class AuthService {
     };
   }
 }
-

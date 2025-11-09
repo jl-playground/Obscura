@@ -16,3 +16,13 @@ export interface AuthPayload {
   userId: string;
   profileId: string;
 }
+
+export interface PassPayload {
+  userId: string;
+  passedProfileId: string;
+}
+
+export interface MatchPayload {
+  userId: string;
+  matchedProfileId: string;
+}

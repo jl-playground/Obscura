@@ -1,40 +1,9 @@
 import type { MigrationInterface, QueryRunner } from "typeorm";
-
 import { Table, TableForeignKey, TableIndex } from "typeorm";
 
-export class AddMatchingTable1762365980769 implements MigrationInterface {
+export class CreateUserAnswerTable1762365980770 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
-    // 1. Create 'question' table
-    await queryRunner.createTable(
-      new Table({
-        name: "question",
-        columns: [
-          {
-            name: "id",
-            type: "uuid",
-            isPrimary: true,
-            isGenerated: true,
-            generationStrategy: "uuid",
-          },
-          {
-            name: "text",
-            type: "text",
-          },
-          {
-            name: "type",
-            type: "enum",
-            enum: ["scale_1_5", "multiple_choice"],
-          },
-          {
-            name: "options",
-            type: "json", // 'simple-json' maps to 'json' in postgres
-            isNullable: true,
-          },
-        ],
-      }),
-    );
-
-    // 2. Create 'user_answer' table
+    // Create the 'user_answer' table
     await queryRunner.createTable(
       new Table({
         name: "user_answer",
@@ -62,7 +31,7 @@ export class AddMatchingTable1762365980769 implements MigrationInterface {
       }),
     );
 
-    // 3. Add unique index to 'user_answer'
+    // Add unique index (user_id + question_id)
     await queryRunner.createIndex(
       "user_answer",
       new TableIndex({
@@ -72,34 +41,31 @@ export class AddMatchingTable1762365980769 implements MigrationInterface {
       }),
     );
 
-    // 4. Add foreign keys
-    await queryRunner.createForeignKey(
-      "user_answer",
+    // Add foreign keys
+    await queryRunner.createForeignKeys("user_answer", [
       new TableForeignKey({
+        name: "FK_user_answer_user",
         columnNames: ["user_id"],
         referencedColumnNames: ["id"],
         referencedTableName: "user",
         onDelete: "CASCADE",
       }),
-    );
-
-    await queryRunner.createForeignKey(
-      "user_answer",
       new TableForeignKey({
+        name: "FK_user_answer_question",
         columnNames: ["question_id"],
         referencedColumnNames: ["id"],
         referencedTableName: "question",
         onDelete: "CASCADE",
       }),
-    );
+    ]);
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    // Drop in reverse order
-    await queryRunner.dropForeignKey("user_answer", "FK_user_answer_question");
-    await queryRunner.dropForeignKey("user_answer", "FK_user_answer_user");
+    const table = await queryRunner.getTable("user_answer");
+    if (table) {
+      await queryRunner.dropForeignKeys("user_answer", table.foreignKeys);
+    }
     await queryRunner.dropIndex("user_answer", "IDX_USER_QUESTION_UNIQUE");
     await queryRunner.dropTable("user_answer");
-    await queryRunner.dropTable("question");
   }
 }

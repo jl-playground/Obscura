@@ -20,7 +20,13 @@ export class AddDailyBatchTable1762366660757 implements MigrationInterface {
           },
           {
             name: "matched_profile_ids",
-            type: "text[]", // Postgres array of text
+            type: "jsonb",
+            default: "'[]'",
+          },
+          {
+            name: "passed_profile_ids",
+            type: "jsonb",
+            default: "'[]'",
           },
           {
             name: "created_at",

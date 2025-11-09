@@ -18,8 +18,11 @@ export class DailyBatch {
   @Index()
   user_id: string;
 
-  @Column({ type: "simple-array" })
+  @Column({ type: "jsonb", default: () => "'[]'" })
   matched_profile_ids: string[];
+
+  @Column({ type: "jsonb", default: () => "'[]'" })
+  passed_profile_ids: string[];
 
   @CreateDateColumn()
   created_at: Date;
