@@ -9,12 +9,19 @@ import type {
 import { In, Not } from "typeorm";
 import { UserAnswerRepository } from "./userAnswer.repository";
 import { DailyBatchRepository } from "./dailyBatch.repository";
-import type { Profile } from "../../../core/db/entities/profile.entity";
+import { Profile } from "../../../core/db/entities/profile.entity";
 import type { UserAnswer } from "../../../core/db/entities/userAnswer.entity";
 import { QuestionType } from "../../../core/db/entities/question.entity";
-import { ConnectionStatus } from "@/core/db/entities/connection.entity";
+import {
+  Connection,
+  ConnectionStatus,
+} from "@/core/db/entities/connection.entity";
 import { RoomRepository } from "../chat/room.repository";
 import { v4 as uuidv4 } from "uuid";
+import { dataSource } from "@/core/db/dataSource";
+import { User } from "@/core/db/entities/user.entity";
+import { DailyBatch } from "@/core/db/entities/dailyBatch.entity";
+import { Room } from "@/core/db/entities/room.entity";
 
 // --- Configuration for our algorithm ---
 const DAILY_BATCH_SIZE = 10;
@@ -33,6 +40,7 @@ export class MatchingService {
   private answerRepo = UserAnswerRepository;
   private batchRepo = DailyBatchRepository;
   private roomRepo = RoomRepository;
+  private dataSource = dataSource;
 
   /**
    * The main public method.
@@ -88,34 +96,53 @@ export class MatchingService {
   ): Promise<{ status: string; code: number }> {
     const { userId, matchedProfileId } = req;
 
-    const user = await this.userRepo.findOneBy({ id: userId });
-    const likedUser = await this.profileRepo.findOne({
-      where: { id: matchedProfileId },
-      relations: ["user"],
+    return await this.dataSource.transaction(async (manager) => {
+      const user = await manager.getRepository(User).findOneBy({ id: userId });
+
+      const batch = await manager
+        .getRepository(DailyBatch)
+        .createQueryBuilder("batch")
+        .where("batch.user_id = :userId", { userId })
+        .getOne();
+
+      const likedUser = await manager.getRepository(Profile).findOne({
+        where: { id: matchedProfileId },
+        relations: ["user"],
+      });
+
+      if (!user) throw new Error("User not found");
+      if (!likedUser) throw new Error("Matched profile user not found");
+      if (!batch) throw new Error("No active daily batch found");
+
+      batch.matched_profile_ids = batch.matched_profile_ids.filter(
+        (e) => e !== matchedProfileId,
+      );
+
+      if (!batch.connected_profile_ids.includes(matchedProfileId)) {
+        batch.connected_profile_ids.push(matchedProfileId);
+      }
+
+      await manager.getRepository(DailyBatch).save(batch);
+
+      const connection = manager.getRepository(Connection).create({
+        id: uuidv4(),
+        user_a_id: userId,
+        user_b_id: likedUser.user.id,
+        status: ConnectionStatus.ACTIVE,
+      });
+
+      await manager.getRepository(Connection).save(connection);
+
+      const room = manager.getRepository(Room).create({
+        connection_id: connection.id,
+        room_code: uuidv4(),
+        created_at: new Date(),
+      });
+
+      await manager.getRepository(Room).save(room);
+
+      return { status: "success", code: 200 };
     });
-
-    if (!user) throw new Error("User not found");
-    if (!likedUser) throw new Error("Matched profile user not found");
-
-    const connection = this.connRepo.create({
-      id: uuidv4(),
-      user_a_id: userId,
-      user_b_id: likedUser.user.id,
-      status: ConnectionStatus.ACTIVE,
-    });
-
-    console.log(connection);
-
-    const room = this.roomRepo.create({
-      connection_id: connection.id,
-      room_code: uuidv4(),
-      created_at: new Date(),
-    });
-
-    await this.connRepo.save(connection);
-    await this.roomRepo.save(room);
-
-    return { status: "success", code: 200 };
   }
 
   async revertAllPasses(

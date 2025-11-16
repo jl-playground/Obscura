@@ -23,7 +23,9 @@ export class RoomRoutes {
       group
         // Protected sub-routes
         .guard({ beforeHandle: authMiddleware }, (guarded) =>
-          guarded.get("/", (ctx) => this.controller.list(ctx as any)),
+          guarded
+            .get("/", (ctx) => this.controller.list(ctx as any))
+            .get("/:roomId", (ctx) => this.controller.getRoomMessages(ctx as any)),
         )
 
         // Public routes

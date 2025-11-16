@@ -48,7 +48,11 @@ export class MatchingController {
       } else {
         set.status = 500;
       }
-      return { status: "error", message: error.message };
+      return {
+        status: "error",
+        message: error.message,
+        statusCode: set.status,
+      };
     }
   }
 

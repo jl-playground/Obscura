@@ -29,6 +29,11 @@ export class AddDailyBatchTable1762366660757 implements MigrationInterface {
             default: "'[]'",
           },
           {
+            name: "connected_profile_ids",
+            type: "jsonb",
+            default: "'[]'",
+          },
+          {
             name: "created_at",
             type: "timestamp",
             default: "CURRENT_TIMESTAMP",

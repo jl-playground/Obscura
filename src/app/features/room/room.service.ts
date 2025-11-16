@@ -39,6 +39,42 @@ export class RoomService {
       },
     };
   }
+  public async getRoomMessages(auth: AuthPayload, roomId: string, body: any) {
+    const { userId } = auth;
+    console.log(
+      `RoomService.getRoomMessages() called by user: ${userId} for room: ${roomId}`,
+    );
+
+    const room = await this.roomRepository
+      .createQueryBuilder("room")
+      .leftJoinAndSelect("room.connection", "connection")
+      .where("room.id = :roomId", { roomId })
+      .andWhere(
+        "(connection.user_a_id = :userId OR connection.user_b_id = :userId)",
+        { userId },
+      )
+      .leftJoinAndSelect("room.messages", "messages")
+      .orderBy("messages.created_at", "ASC")
+      .getOne();
+
+    if (!room) {
+      console.log(`Room not found or access denied for user: ${userId}`);
+      throw new Error("Room not found or access denied");
+    }
+
+    console.log(
+      `Fetched messages for room: ${roomId} by user: ${userId}`,
+      room.messages,
+    );
+
+    return {
+      status: "success",
+      data: {
+        roomId: room.id,
+        messages: room.messages,
+      },
+    };
+  }
 }
 
 export const roomService = new RoomService();
