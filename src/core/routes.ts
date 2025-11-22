@@ -7,6 +7,7 @@ import { ChatRoutes } from "@/app/features/chat/chat.route";
 import { MatchingRoutes } from "@/app/features/matching/matching.route";
 import { QuestionRoutes } from "@/app/features/question/question.routes";
 import { RoomRoutes } from "@/app/features/room/room.route";
+import { RedirectRoutes } from "@/app/features/redirect/redirect.route";
 
 export class AppRouter {
   private app: Elysia;
@@ -18,6 +19,7 @@ export class AppRouter {
   private matchningRoutes: MatchingRoutes;
   private connectionRoutes: ConnectionRoutes;
   private roomRoutes: RoomRoutes;
+  private redirectRoutes: RedirectRoutes;
 
   /**
    * Initializes the main AppRouter with the Elysia app instance.
@@ -33,6 +35,7 @@ export class AppRouter {
     this.connectionRoutes = new ConnectionRoutes(app);
     this.matchningRoutes = new MatchingRoutes(app);
     this.roomRoutes = new RoomRoutes(app);
+    this.redirectRoutes = new RedirectRoutes(app);
   }
 
   /**
@@ -50,6 +53,7 @@ export class AppRouter {
     this.matchningRoutes.register();
     this.connectionRoutes.register();
     this.roomRoutes.register();
+    this.redirectRoutes.register();
     return this.app;
   }
 

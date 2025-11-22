@@ -6,6 +6,7 @@ import type { Profile } from "@/core/db/entities/profile.entity";
 import { AuthPayload, LoginDto, RegisterDto } from "./auth.dto";
 import * as bcrypt from "bcrypt";
 import * as jwt from "jsonwebtoken";
+import { EmailService } from "../email/email.service";
 
 // --- Data Transfer Objects (DTOs) ---
 
@@ -13,6 +14,7 @@ export class AuthService {
   // Get our custom repositories
   private userRepository = UserRepository;
   private profileRepository = ProfileRepository;
+  private emailService = new EmailService();
 
   /**
    * Registers a new user and creates their associated profile.
@@ -93,6 +95,34 @@ export class AuthService {
     }
 
     return this.generateAuthToken(user, user.profile);
+  }
+
+  public async passwordReset(dto: { email: string }) {
+    // Implementation for password reset logic
+    const user = await this.userRepository.findByEmail(dto.email);
+    if (!user) {
+      throw new Error("No user found with this email.");
+    }
+
+    // Generate a password reset token and send email (not implemented here)
+
+    const resetJWT = jwt.sign(
+      { userId: user.id },
+      process.env.JWT_SECRET || "OBSCURA_DEV_SECRET_KEY",
+      { expiresIn: "1h" },
+    );
+
+    await this.emailService.sendEmail(
+      user.email,
+      "Password Reset Request",
+      resetJWT,
+      user.email,
+    );
+    console.log(`Password reset token for user ${user.email}: ${resetJWT}`);
+    // Here you would send the resetJWT to the user's email address
+    //
+
+    return { message: "Password reset link has been sent to your email." };
   }
 
   /**

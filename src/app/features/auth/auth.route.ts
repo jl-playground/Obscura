@@ -52,6 +52,15 @@ export class AuthRoutes {
             }),
           },
         )
+        .post(
+          "passwordReset",
+          this.controller.passwordReset.bind(this.controller),
+          {
+            body: t.Object({
+              email: t.String({ format: "email" }),
+            }),
+          },
+        )
         .get("test", () => "Auth route works!"),
     );
   }
