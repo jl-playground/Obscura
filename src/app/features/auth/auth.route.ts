@@ -61,6 +61,17 @@ export class AuthRoutes {
             }),
           },
         )
+        .post(
+          "newPassword",
+          this.controller.newPassword.bind(this.controller),
+          {
+            body: t.Object({
+              temporaryToken: t.String(),
+              newPassword: t.String({ minLength: 8 }),
+              confirmPassword: t.String({ minLength: 8 }),
+            }),
+          },
+        )
         .get("test", () => "Auth route works!"),
     );
   }

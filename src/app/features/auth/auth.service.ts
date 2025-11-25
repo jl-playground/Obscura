@@ -125,6 +125,43 @@ export class AuthService {
     return { message: "Password reset link has been sent to your email." };
   }
 
+  public async newPassword(dto: {
+    temporaryToken: string;
+    newPassword: string;
+    confirmPassword: string;
+  }) {
+    // Implementation for password reset logic
+    const { temporaryToken, newPassword, confirmPassword } = dto;
+
+    if (newPassword !== confirmPassword) {
+      throw new Error("New password and confirmation do not match.");
+    }
+
+    const decoded: any = jwt.verify(
+      temporaryToken,
+      process.env.JWT_SECRET || "OBSCURA_DEV_SECRET_KEY",
+    );
+
+    if (!decoded || !decoded.userId) {
+      throw new Error("Invalid or expired token.");
+    }
+
+    const user = await this.userRepository.findOneBy({ id: decoded.userId });
+
+    if (!user) {
+      throw new Error("No user found with this email.");
+    }
+
+    const passwordHash = await bcrypt.hash(newPassword, 12);
+
+    user.password_hash = passwordHash;
+    await this.userRepository.save(user);
+
+    console.log(`Password updated successfully for user ${user.email}.`);
+
+    return { message: "Password has been updated successfully." };
+  }
+
   /**
    * Generates a signed JSON Web Token (JWT) for an authenticated user.
    */
