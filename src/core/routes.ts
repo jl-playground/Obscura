@@ -6,6 +6,8 @@ import { ConnectionRoutes } from "@/app/features/connection/connection.route";
 import { ChatRoutes } from "@/app/features/chat/chat.route";
 import { MatchingRoutes } from "@/app/features/matching/matching.route";
 import { QuestionRoutes } from "@/app/features/question/question.routes";
+import { RoomRoutes } from "@/app/features/room/room.route";
+import { RedirectRoutes } from "@/app/features/redirect/redirect.route";
 
 export class AppRouter {
   private app: Elysia;
@@ -16,6 +18,8 @@ export class AppRouter {
   private questionRoutes: QuestionRoutes;
   private matchningRoutes: MatchingRoutes;
   private connectionRoutes: ConnectionRoutes;
+  private roomRoutes: RoomRoutes;
+  private redirectRoutes: RedirectRoutes;
 
   /**
    * Initializes the main AppRouter with the Elysia app instance.
@@ -30,6 +34,8 @@ export class AppRouter {
     this.questionRoutes = new QuestionRoutes(app);
     this.connectionRoutes = new ConnectionRoutes(app);
     this.matchningRoutes = new MatchingRoutes(app);
+    this.roomRoutes = new RoomRoutes(app);
+    this.redirectRoutes = new RedirectRoutes(app);
   }
 
   /**
@@ -37,7 +43,7 @@ export class AppRouter {
    * This is the single entry point for application routing.
    * @returns The Elysia app instance with all routes registered.
    */
-  public registerAll (): Elysia {
+  public registerAll(): Elysia {
     this.authRoutes.register();
     this.userRoutes.register();
     this.chatRoutes.register();
@@ -46,13 +52,15 @@ export class AppRouter {
     this.questionRoutes.register();
     this.matchningRoutes.register();
     this.connectionRoutes.register();
+    this.roomRoutes.register();
+    this.redirectRoutes.register();
     return this.app;
   }
 
   /**
    * A private method for registering global, non-module routes.
    */
-  private registerGlobalRoutes (): void {
+  private registerGlobalRoutes(): void {
     this.app.get("/health", ({ set }) => {
       set.status = 200;
       return {
