@@ -24,6 +24,9 @@ export class DailyBatch {
   @Column({ type: "jsonb", default: () => "'[]'" })
   passed_profile_ids: string[];
 
+  @Column({ type: "jsonb", default: () => "'[]'" })
+  connected_profile_ids: string[];
+
   @CreateDateColumn()
   created_at: Date;
 
