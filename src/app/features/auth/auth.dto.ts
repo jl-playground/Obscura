@@ -1,6 +1,8 @@
 // This interface defines the data we expect for a registration request.
 export interface RegisterDto {
   email: string;
+  firstName: string;
+  lastName: string;
   password: string;
 }
 
@@ -14,6 +16,13 @@ export interface LoginDto {
 // It acts as the "passport" for an authenticated user.
 export interface AuthPayload {
   userId: string;
+  profileId: string;
+}
+
+export interface RegisterPayload {
+  userId: string;
+  firstName: string;
+  lastName: string;
   profileId: string;
 }
 

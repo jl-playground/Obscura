@@ -1,0 +1,19 @@
+metadata_dir = "/var/lib/garage/meta"
+data_dir = "/var/lib/garage/data"
+db_engine = "sqlite"
+
+replication_mode = "none" # "none" for single-node. "2" or "3" for clusters.
+
+rpc_bind_addr = "[::]:3901"
+rpc_public_addr = "127.0.0.1:3901"                       # Change if expanding to multiple nodes
+rpc_secret = "replace_this_with_a_random_32_char_string"
+
+[s3_api]
+s3_region = "us-east-1"
+api_bind_addr = "[::]:3900"
+root_domain = ".s3.local"   # Optional: allows bucket.s3.local access
+
+[s3_web]
+bind_addr = "[::]:3902"
+root_domain = ".web.local"
+index = "index.html"

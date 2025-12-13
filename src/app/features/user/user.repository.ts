@@ -10,7 +10,7 @@ export const UserRepository = dataSource.getRepository(User).extend({
    * @param email - The email to search for.
    * @returns A User entity or null.
    */
-  findByEmail (email: string) {
+  findByEmail(email: string) {
     return this.findOne({
       where: { email: email.toLowerCase() }, // Standardize email search
     });
@@ -22,7 +22,7 @@ export const UserRepository = dataSource.getRepository(User).extend({
    * @param email - The email to search for.
    * @returns A User entity with the 'profile' relation loaded, or null.
    */
-  findByEmailWithProfile (email: string) {
+  findByEmailWithProfile(email: string) {
     return this.findOne({
       where: { email: email.toLowerCase() },
       relations: ["profile"], // This 'profile' string matches the relation name in User entity
@@ -35,7 +35,7 @@ export const UserRepository = dataSource.getRepository(User).extend({
    * @param id - The UUID of the user.
    * @returns A User entity with profile, connections, etc., or null.
    */
-  findUserWithAllRelations (id: string) {
+  findUserWithAllRelations(id: string) {
     return this.findOne({
       where: { id },
       relations: ["profile", "connections_a", "connections_b"],

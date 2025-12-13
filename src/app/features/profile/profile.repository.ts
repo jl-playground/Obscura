@@ -6,7 +6,7 @@ export const ProfileRepository = dataSource.getRepository(Profile).extend({
   /**
    * Finds a profile by its associated user ID.
    */
-  findByUserId (userId: string) {
+  findByUserId(userId: string) {
     return this.findOne({
       where: { user_id: userId },
       relations: ["user"],
@@ -16,10 +16,8 @@ export const ProfileRepository = dataSource.getRepository(Profile).extend({
   /**
    * Creates and saves a new, empty profile for a user during registration.
    */
-  async createEmptyProfileForUser (user: User): Promise<Profile> {
-    // --- FIX IS HERE ---
+  async createEmptyProfileForUser(user: User): Promise<Profile> {
     // We are no longer sending bio, interests, or photo_urls.
-    // We are letting the 'default' values from the entity handle it.
     const newProfile = this.create({
       user: user,
       silhouette_url: "default-silhouette-placeholder.png",
@@ -31,10 +29,9 @@ export const ProfileRepository = dataSource.getRepository(Profile).extend({
   /**
    * Updates the profile's silhouette URL.
    */
-  updateSilhouette (profileId: string, silhouetteUrl: string) {
+  updateSilhouette(profileId: string, silhouetteUrl: string) {
     return this.update(profileId, {
       silhouette_url: silhouetteUrl,
     });
   },
 });
-

@@ -1,9 +1,14 @@
 import { dataSource } from "@/core/db/dataSource";
 import { UserRepository } from "@/app/features/user/user.repository";
 import { ProfileRepository } from "@/app/features/profile/profile.repository";
-import { User } from "@/core/db/entities/user.entity";
+import type { User } from "@/core/db/entities/user.entity";
 import type { Profile } from "@/core/db/entities/profile.entity";
-import { AuthPayload, LoginDto, RegisterDto } from "./auth.dto";
+import {
+  AuthPayload,
+  LoginDto,
+  RegisterDto,
+  RegisterPayload,
+} from "./auth.dto";
 import * as bcrypt from "bcrypt";
 import * as jwt from "jsonwebtoken";
 import { EmailService } from "../email/email.service";
@@ -31,10 +36,13 @@ export class AuthService {
 
     // 2. Hash the password
     const passwordHash = await bcrypt.hash(dto.password, 12);
+    console.log(`User: ${dto.email} userName: ${dto.firstName} .`);
 
     // 3. Create the User entity
     const newUser = this.userRepository.create({
       email: dto.email,
+      first_name: dto.firstName,
+      last_name: dto.lastName,
       password_hash: passwordHash,
     });
     console.log(`Created new user entity for email: ${newUser}`);
@@ -44,6 +52,19 @@ export class AuthService {
     // 4. Create the associated Profile entity
     const newProfile =
       await this.profileRepository.createEmptyProfileForUser(savedUser);
+
+    const registerJWT = jwt.sign(
+      { userId: savedUser.id },
+      process.env.JWT_SECRET || "OBSCURA_DEV_SECRET_KEY",
+      { expiresIn: "1h" },
+    );
+    // Send welcome email with email Verification
+    await this.emailService.sendWelcomeMailEmail(
+      savedUser.email,
+      "Welcome to Obscura!",
+      registerJWT,
+      `${savedUser.first_name} ${savedUser.last_name}`,
+    );
 
     // 5. Generate and return a token
     return this.generateAuthToken(savedUser, newProfile);
@@ -112,7 +133,7 @@ export class AuthService {
       { expiresIn: "1h" },
     );
 
-    await this.emailService.sendEmail(
+    await this.emailService.sendVerificationEmail(
       user.email,
       "Password Reset Request",
       resetJWT,
@@ -166,8 +187,10 @@ export class AuthService {
    * Generates a signed JSON Web Token (JWT) for an authenticated user.
    */
   private generateAuthToken(user: User, profile: Profile) {
-    const payload: AuthPayload = {
+    const payload: RegisterPayload = {
       userId: user.id,
+      firstName: user.firstName,
+      lastName: user.lastName,
       profileId: profile.id,
     };
 

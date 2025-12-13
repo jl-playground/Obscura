@@ -14,6 +14,8 @@ export class AuthRoutes {
     register: t.Object({
       email: t.String({ format: "email" }),
       password: t.String({ minLength: 8 }),
+      firstName: t.String({ minLength: 1 }),
+      lastName: t.String({ minLength: 1 }),
     }),
     login: t.Object({
       email: t.String(),

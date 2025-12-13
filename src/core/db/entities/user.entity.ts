@@ -21,6 +21,12 @@ export class User {
   email: string;
 
   @Column({ type: "varchar" })
+  first_name: string;
+
+  @Column({ type: "varchar" })
+  last_name: string;
+
+  @Column({ type: "varchar" })
   password_hash: string;
 
   @CreateDateColumn()
