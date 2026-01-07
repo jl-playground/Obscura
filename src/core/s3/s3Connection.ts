@@ -17,10 +17,7 @@ export default class S3Connection {
   }
 
   public static get instance(): S3Connection {
-    if (!S3Connection.#instance) {
-      S3Connection.#instance = new S3Connection();
-    }
-
+    if (!S3Connection.#instance) S3Connection.#instance = new S3Connection();
     return S3Connection.#instance;
   }
 

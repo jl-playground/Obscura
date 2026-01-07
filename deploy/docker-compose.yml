@@ -27,7 +27,7 @@ services:
     image: quay.io/minio/minio:latest
     container_name: minio
     restart: always
-    command: server /data --console-address ":9001"
+    command: server /data --console-address ":${S3_SERVER_PORT}"
     ports:
       - "${S3_SERVER_PORT}:${S3_SERVER_PORT}"
       - "${S3_CLIENT_PORT}:${S3_CLIENT_PORT}"

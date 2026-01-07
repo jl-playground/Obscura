@@ -1,8 +1,7 @@
-import { Elysia, t } from "elysia";
+import { Elysia } from "elysia";
 import { ErrorHandlerMiddleware } from "@/app/middlewares/errorHandler";
 import { AppRouter } from "@/core/routes";
 import { SocketHandler } from "@/app/features/chat/chat.socket";
-import S3Connection from "./s3/s3connection";
 
 // --- Create App ---
 const app = new Elysia();
@@ -11,7 +10,6 @@ const app = new Elysia();
 const errorHandler = new ErrorHandlerMiddleware(app);
 const router = new AppRouter(app);
 const socketHandler = new SocketHandler();
-const s3 = S3Connection.instance.getBucket;
 
 errorHandler.register();
 router.registerAll();
