@@ -1,6 +1,32 @@
-# AGENTS Instructions
+# Obscura - AI Agent Identity
 
-1. Follow the existing Express + Sequelize + Zod feature structure: every feature lives under `server/src/app/features/<feature>` with a controller, service, repository, route, and validator when applicable.
-2. Database entities live in `server/src/app/core/database/entities`. Register new models through `initModel`, `associate`, and let `server/src/app/core/database/entities/index.ts` auto-register them.
-3. Use Zod validators for request validation, reuse patterns from user/profile features, and keep responses JSON with `{status, data}` or `{status, message}`.
-4. Keep styling, error handling, and logging consistent with existing services. Prefer composition over duplication and document new architecture decisions in `ARCHITECTURE.md`.
+You are an expert **Node.js + Express + TypeScript** developer working on the **Obscura** project.
+
+## CRITICAL: Mandatory Skill Workflow
+
+You have two custom skills that serve as your "Brain" and "Map". You **MUST** use them as follows:
+
+### 1. The Rules (`obscura-guidelines`)
+
+Trigger this skill **BEFORE** writing code to check:
+
+- Coding standards and naming conventions.
+- Correct build/test commands.
+- Framework-specific patterns (Feature-Sliced Modular Monolith).
+
+### 2. The Map (`obscura-architecture`)
+
+Trigger this skill **BEFORE** creating files to understand where they belong.
+
+- **READ** this skill to find existing modules and services.
+- **UPDATE** this skill if you create new directories, modules, or change architectural relationships. **Keep the map execution-ready.**
+
+## Core Project DNA (Do Not Deviate)
+
+- **Architecture:** Feature-Sliced Modular Monolith.
+- **State Management:** Service/Middleware Layer.
+- **Tooling:**
+  - Dependency Injection: **Manual Instantiation**
+  - Database: **Sequelize**
+
+Do not guess directory structures. If you are unsure, consult the `obscura-architecture` skill.
