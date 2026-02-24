@@ -1,0 +1,80 @@
+import type { QueryInterface } from 'sequelize';
+
+export const up = async (queryInterface: QueryInterface): Promise<void> => {
+  await queryInterface.bulkInsert('tracker_telemetry', [
+    {
+      uuid: '1a2b3c4d-5e6f-7a8b-9c0d-ef1234567890',
+      speed: 24,
+      height: 504,
+      mobile_carrier: '241',
+      mobile_network: '178',
+      latitude: 37.7749,
+      longitude: -122.4194,
+      mobile_signal: 21,
+      battery: 142,
+      tracker_uuid: '0548fd93-5c27-4e39-8019-b551809b45ae',
+      created_at: new Date(),
+      updated_at: new Date(),
+    },
+    {
+      uuid: '2b3c4d5e-6f7a-8b9c-0d1e-f234567890ab',
+      speed: 24,
+      height: 504,
+      latitude: 37.7749,
+      longitude: -122.4194,
+      mobile_carrier: '241',
+      mobile_network: '178',
+      mobile_signal: 21,
+      battery: 142,
+      tracker_uuid: 'c5cb96d7-0dbc-45fe-8f33-fe9922ae92c7',
+      created_at: new Date(),
+      updated_at: new Date(),
+    },
+    {
+      uuid: '3c4d5e6f-7a8b-9c0d-1e2f-34567890abcd',
+      speed: 24,
+      height: 504,
+      latitude: 37.7749,
+      longitude: -122.4194,
+      mobile_carrier: '241',
+      mobile_network: '178',
+      mobile_signal: 21,
+      battery: 142,
+      tracker_uuid: '10ca11ea-70a6-4d9c-9899-aa13c547cf75',
+      created_at: new Date(),
+      updated_at: new Date(),
+    },
+    {
+      uuid: '4d5e6f7a-8b9c-0d1e-2f3a-4567890abcde',
+      speed: 24,
+      height: 504,
+      latitude: 37.7749,
+      longitude: -122.4194,
+      mobile_carrier: '241',
+      mobile_network: '178',
+      mobile_signal: 21,
+      battery: 142,
+      tracker_uuid: '3b0aef3f-f04e-4e23-9550-4202b15bed58',
+      created_at: new Date(),
+      updated_at: new Date(),
+    },
+    {
+      uuid: '5e6f7a8b-9c0d-1e2f-3a4b-567890abcdef',
+      speed: 24,
+      height: 504,
+      latitude: 37.7749,
+      longitude: -122.4194,
+      mobile_carrier: '241',
+      mobile_network: '178',
+      mobile_signal: 21,
+      battery: 142,
+      tracker_uuid: 'd1c9e5b8-9f0a-4c3e-8b2e-7a1f2c3d4e5f',
+      created_at: new Date(),
+      updated_at: new Date(),
+    },
+  ]);
+};
+
+export const down = async (queryInterface: QueryInterface): Promise<void> => {
+  await queryInterface.bulkInsert('tracker_telemetry', []);
+};

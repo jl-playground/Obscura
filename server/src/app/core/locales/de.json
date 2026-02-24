@@ -1,0 +1,148 @@
+{
+  "email": "E-Mail:",
+  "evosys": "EvoSys AG",
+  "supportRequest": "Supportanfrage",
+  "displayEvosys": "Intervento von EvoSys",
+  "goodDay": "Guten Tag",
+  "general": {
+    "alarm": "Alarm",
+    "alarmsheet": "Alarmsheet"
+  },
+  "partial": {
+    "footer": "Unser Support-Team ist für Sie da!"
+  },
+  "alarmEmail": {
+    "text1": "Im Anhang finden Sie das Alarmsheet zum Alarm"
+  },
+  "layerEmail": {
+    "subjectString": "Intervento: Kartendienst",
+    "text": "Kartendienst wurde erfolgreich heruntergeladen."
+  },
+  "reportEmail": {
+    "subjectString": "Intervento: Protokoll",
+    "text": "Protokoll wurde erfolgreich erstellt."
+  },
+  "formEmail": {
+    "subjectString": "Intervento: Formular",
+    "text": "Formular wurde erfolgreich erstellt."
+  },
+  "organizationAccessEmail": {
+    "subjectString": "Intervento: Organisation Zugangscode",
+    "text": "Zugangscode"
+  },
+  "alarmPdf": {
+    "deploymentOrder": "Ausrückeordnung",
+    "calendar": "Kalender",
+    "keyword": "Einsatz-Stichwort",
+    "text": "Einsatz-Text",
+    "address": "Einsatz-Adresse",
+    "time": "Einsatz-Zeit",
+    "tickersAndTexts": "Laufschriften / Texte"
+  },
+  "supportEmail": {
+    "organization": "Organisation:",
+    "organizations": "Organisationen:",
+    "organizationId": "Organisations-ID:",
+    "userId": "Benutzer-ID:",
+    "url": "URL:",
+    "browser": "Browser:",
+    "ip": "IP:",
+    "os": "Betriebssystem:",
+    "message": "Nachricht:"
+  },
+  "quotaEmail": {
+    "title1": "Intervento: ",
+    "title2": " der ",
+    "title3": "-Limite erreicht",
+    "sms": "SMS",
+    "alarm": "Alarm",
+    "alarms": "Incidents",
+    "alarmsOf": "Alarmen",
+    "text1": "Sie sind im Intervento als Administrator ihrer Organisation erfasst, deshalb erhalten Sie diese automatisierte Nachricht von uns.",
+    "text2": "Mit dieser Nachricht möchten wir Sie darüber informieren, dass ",
+    "text3": " von ihrem abonnierten",
+    "text4": "-Kontingent in Intervento erreicht wurde.",
+    "text5": "Insgesamt wurden in der aktuellen Periode ",
+    "text6": " durch Intervento verarbeitet. Die aktuell gebuchte ",
+    "text7": "-Version des Dienstes beinhaltet ein jährliches Kontingent von ",
+    "text8": "Wenn die Limite erreicht wird, werden keine weiteren ",
+    "text9": " mehr in der aktuellen Periode weiterverarbeitet. Möchten Sie ihre gebuchte Version des Intervento anpassen? Kontaktieren Sie dazu einfach unser Support-Team."
+  },
+  "quotaSupport": {
+    "receiver": "Empfänger:",
+    "organization": "Organisation:",
+    "version": "Version:",
+    "utilization": "Auslastung",
+    "usage": "Nutzung",
+    "limit": "Limite"
+  },
+  "footer": {
+    "text1": "Unser Support-Team ist für Sie da!"
+  },
+  "location": {
+    "mainLocation": "Hauptstandort"
+  },
+  "object": {
+    "point": "Punkt",
+    "linestring": "Linie",
+    "polygon": "Fläche",
+    "category1": "Kategorie 1",
+    "category2": "Kategorie 2",
+    "category3": "Kategorie 3",
+    "floriplan": {
+      "objectOfUse": "Einsatzobjekt",
+      "training": "Trainingsobjekt"
+    }
+  },
+  "folder": {
+    "floriplan": "FloriPlan",
+    "operationPlan": "Einsatzpläne"
+  },
+  "protocol": {
+    "arrived": "Ankunft",
+    "departed": "Abfahrt",
+    "text": "Text",
+    "input": "Eingabe",
+    "datetime": "Datum",
+    "uploaded": "Hochgeladen",
+    "edited": "Bearbeitet",
+    "close": "Geschlossen",
+    "title": "Einsatzprotokoll",
+    "open": "Geöffnet",
+    "postAlarming": "Nach-Alarmierung",
+    "journal": {
+      "create": {
+        "entry": "Eintrag erstellt",
+        "order": "Auftrag erstellt"
+      },
+      "finalize": {
+        "order": "Auftrag abgeschlossen"
+      }
+    }
+  },
+  "form": {
+    "form": "Formular",
+    "title": "Titel",
+    "content": "Inhalt"
+  },
+  "dataField": {
+    "inputText": "Einzeiliger Text",
+    "textField": "Mehrzeiliger Text",
+    "checkbox": "Ankreuzfeld",
+    "radioButton": "Radio-Buttons",
+    "selectList": "Auswahlliste",
+    "inputNumber": {
+      "number": "Nummer/Ganzzahl",
+      "decimal": "Gleitkommazahlen"
+    },
+    "date": "Datum",
+    "time": "Uhrzeit",
+    "calendar": "Datum + Uhrzeit",
+    "signature": "Unterschrift",
+    "incident": "Einsatz"
+  },
+  "invitation": {
+    "request": "Einladungsanfrage",
+    "accepted": "Die Einladung wurde Akzeptiert"
+  }
+}

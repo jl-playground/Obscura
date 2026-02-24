@@ -1,0 +1,148 @@
+{
+  "email": "E-mail:",
+  "evosys": "EvoSys AG",
+  "supportRequest": "Support request",
+  "displayEvosys": "Intervento of EvoSys",
+  "goodDay": "Hello",
+  "general": {
+    "alarm": "alarm",
+    "alarmsheet": "Alarmsheet"
+  },
+  "partial": {
+    "footer": "Our support team is here for you!"
+  },
+  "alarmEmail": {
+    "text1": "In the attachment you will find the alarm sheet for the alarm"
+  },
+  "layerEmail": {
+    "subjectString": "Intervento: Layer service",
+    "text": "Layer service was successfully downloaded."
+  },
+  "reportEmail": {
+    "subjectString": "Intervento: Protocol",
+    "text": "Protocol was created successfully."
+  },
+  "formEmail": {
+    "subjectString": "Intervento: Form",
+    "text": "Form wurde erfolgreich erstellt."
+  },
+  "organizationAccessEmail": {
+    "subjectString": "Intervento: Organization access code",
+    "text": "Access code"
+  },
+  "alarmPdf": {
+    "deploymentOrder": "Deployment order",
+    "calendar": "Calendar",
+    "keyword": "Deployment keyword",
+    "text": "Deployment text",
+    "address": "Deployment address",
+    "time": "Deployment time",
+    "tickersAndTexts": "Tickers / Texts"
+  },
+  "supportEmail": {
+    "organization": "Organisation:",
+    "organizations": "Organisations:",
+    "organizationId": "Organization ID:",
+    "userId": "User ID:",
+    "url": "URL:",
+    "browser": "Browser:",
+    "ip": "IP:",
+    "os": "Operating system:",
+    "message": "Message:"
+  },
+  "quotaEmail": {
+    "title1": "Intervento: ",
+    "title2": " of the ",
+    "title3": "-limit reached",
+    "sms": "SMS",
+    "alarm": "alarm",
+    "alarms": "alarms",
+    "alarmsOf": "alarms",
+    "text1": "You are registered in Intervento as an administrator of your organization, so you will receive this automated message from us.",
+    "text2": "This message is to inform you that ",
+    "text3": " from your subscribed",
+    "text4": "-quota in Intervento has been reached.",
+    "text5": "In total, in the current period ",
+    "text6": " were processed by Intervento. The currently booked ",
+    "text7": "-version of the service includes an annual quota of ",
+    "text8": "When the limit is reached, no more ",
+    "text9": " will be processed in the current period. Do you want to customize your booked version of Intervento? Just contact our support team to do so."
+  },
+  "quotaSupport": {
+    "receiver": "Receiver:",
+    "organization": "Organization:",
+    "version": "Version:",
+    "utilization": "Utilization",
+    "usage": "Usage",
+    "limit": "Limit"
+  },
+  "footer": {
+    "text1": "Our support Team is at your disposal!"
+  },
+  "location": {
+    "mainLocation": "Main location"
+  },
+  "object": {
+    "point": "Point",
+    "linestring": "Line",
+    "polygon": "Polygon",
+    "category1": "Category 1",
+    "category2": "Category 2",
+    "category3": "Category 3",
+    "floriplan": {
+      "objectOfUse": "Object of use",
+      "training": "Training object"
+    }
+  },
+  "folder": {
+    "floriplan": "FloriPlan",
+    "operationPlan": "Operation plans"
+  },
+  "protocol": {
+    "arrived": "Arrived",
+    "departed": "Departed",
+    "text": "Text",
+    "input": "Input",
+    "datetime": "Date",
+    "uploaded": "Uploaded",
+    "edited": "Edited",
+    "close": "Closed",
+    "title": "Operation log",
+    "open": "Opened",
+    "postAlarming": "post-alarming"
+  },
+  "form": {
+    "form": "Form",
+    "title": "Title",
+    "content": "Content"
+  },
+  "journal": {
+    "create": {
+      "entry": "Created entry",
+      "order": "Created order"
+    },
+    "finalize": {
+      "order": "Order completed"
+    }
+  },
+  "dataField": {
+    "inputText": "Single-line text",
+    "textField": "Multiline text",
+    "checkbox": "Checkbox",
+    "radioButton": "Radio buttons",
+    "selectList": "Selection list",
+    "inputNumber": {
+      "number": "Number/integer",
+      "decimal": "Floating point numbers"
+    },
+    "date": "Date",
+    "time": "Time",
+    "calendar": "date + time",
+    "signature": "Signature",
+    "incident": "Incident"
+  },
+  "invitation": {
+    "request": "Invitation request",
+    "accepted": "The invitation has been accepted"
+  }
+}

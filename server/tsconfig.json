@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    },
+    "allowImportingTsExtensions": false,
+    "esModuleInterop": true,
+    "exactOptionalPropertyTypes": true,
+    "forceConsistentCasingInFileNames": true,
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "noEmit": true,
+    "noImplicitAny": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "rootDir": ".",
+    "strict": true,
+    "sourceMap": false,
+    "skipLibCheck": true,
+    "strictNullChecks": true,
+    "resolveJsonModule": true,
+    "strictPropertyInitialization": true,
+    "target": "ES2022",
+    "lib": ["ES2022"]
+  },
+  "include": ["src/**/*", "./index.ts", "./eslint.config.mjs", "./prettier.config.mjs", "./global.d.ts"],
+  "exclude": ["node_modules", "**/*.test.ts"]
+}

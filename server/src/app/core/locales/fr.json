@@ -1,0 +1,148 @@
+{
+  "email": "E-mail:",
+  "evosys": "EvoSys AG",
+  "supportRequest": "Demande d'assistance",
+  "displayEvosys": "Intervento de EvoSys",
+  "goodDay": "Bonjour",
+  "general": {
+    "alarm": "alarm",
+    "alarmsheet": "Feuille d'alarme"
+  },
+  "partial": {
+    "footer": "Notre équipe d'assistance est là pour vous aider !"
+  },
+  "alarmEmail": {
+    "text1": "Vous trouverez en annexe la feuille d'alarme pour l'alarm"
+  },
+  "layerEmail": {
+    "subjectString": "Intervento: Service de cartographie",
+    "text": "Cartographie de service effectuée avec succès."
+  },
+  "reportEmail": {
+    "subjectString": "Intervento: Protocole",
+    "text": "Le protocole a été établi avec succès."
+  },
+  "formEmail": {
+    "subjectString": "Intervento: Formulaire",
+    "text": "Le Formulaire a été établi avec succès."
+  },
+  "organizationAccessEmail": {
+    "subjectString": "Intervento: Code d'accès",
+    "text": "Code d'accès"
+  },
+  "alarmPdf": {
+    "deploymentOrder": "Ordre de déploiement",
+    "calendar": "Calendrier",
+    "keyword": "Mot-clé de déploiement",
+    "text": "Texte d'intervention",
+    "address": "Adresse d'intervention",
+    "time": "Heure d'intervention",
+    "tickersAndTexts": "Textes défilants / Textes"
+  },
+  "supportEmail": {
+    "organization": "Organisation:",
+    "organizations": "Organisations:",
+    "organizationId": "Identifiant de l'organisation:",
+    "userId": "Identifiant de l'utilisateur:",
+    "url": "URL:",
+    "browser": "Browser:",
+    "ip": "IP:",
+    "os": "Système d'exploitation:",
+    "message": "Message:"
+  },
+  "quotaEmail": {
+    "title1": "Intervento : ",
+    "title2": " de la ",
+    "title3": "-limite atteinte",
+    "sms": "SMS",
+    "alarm": "alarm",
+    "alarms": "alarmes",
+    "alarmsOf": "alarmes",
+    "text1": "Vous êtes enregistré dans Intervento en tant qu'administrateur de votre organisation, vous recevrez donc ce message automatisé de notre part",
+    "text2": "Ce message a pour but de vous informer que ",
+    "text3": " à partir de votre abonnement",
+    "text4": "-quota dans Intervento a été atteint.",
+    "text5": "Au total, pour la période en cours ",
+    "text6": "ont été traitées par Intervento. Le quota actuellement réservé à la version ",
+    "text7": " du service comprend un quota annuel de ",
+    "text8": "Lorsque la limite est atteinte, il n'y a plus de ",
+    "text9": " ne sera traité pendant la période en cours. Vous souhaitez personnaliser votre version réservée d'Intervento ? Il suffit de contacter notre équipe de support pour le faire."
+  },
+  "quotaSupport": {
+    "receiver": "Récepteur:",
+    "organization": "Organisation:",
+    "version": "Version:",
+    "utilization": "Utilisation",
+    "usage": "Usages",
+    "limit": "Limit"
+  },
+  "footer": {
+    "text1": "Notre équipe du support est là pour vous aider!"
+  },
+  "location": {
+    "mainLocation": "Site principal"
+  },
+  "object": {
+    "point": "Point",
+    "linestring": "Ligne",
+    "polygon": "Polygone",
+    "category1": "Categorie 1",
+    "category2": "Categorie 2",
+    "category3": "Categorie 3",
+    "floriplan": {
+      "objectOfUse": "Objet d'utilisation",
+      "training": "Objet d'entrainement"
+    }
+  },
+  "folder": {
+    "floriplan": "FloriPlan",
+    "operationPlan": "Plans d'operation"
+  },
+  "protocol": {
+    "arrived": "Arrived",
+    "departed": "Departed",
+    "text": "Texte",
+    "input": "Entrée",
+    "datetime": "Date",
+    "uploaded": "Téléchargé",
+    "edited": "Édité",
+    "close": "Fermé",
+    "title": "Protocole d'intervention",
+    "open": "Ouvert",
+    "postAlarming": "Après l'alarme"
+  },
+  "form": {
+    "form": "formulaire",
+    "title": "Titre",
+    "content": "Contente"
+  },
+  "journal": {
+    "create": {
+      "entry": "Entrée créée",
+      "order": "Ordre créé"
+    },
+    "finalize": {
+      "order": "Mission terminée"
+    }
+  },
+  "dataField": {
+    "inputText": "Texte d'une seule ligne",
+    "textField": "Texte sur plusieurs lignes",
+    "checkbox": "case à cocher",
+    "radioButton": "Boutons radio",
+    "selectList": "liste de sélection",
+    "inputNumber": {
+      "number": "numéro/nombre entier",
+      "decimal": "nombres à virgule flottante "
+    },
+    "date": "date",
+    "time": "heure",
+    "calendar": "date + heure",
+    "signature": "signature",
+    "incident": "intervention"
+  },
+  "invitation": {
+    "request": "demande d'invitation",
+    "accepted": "L'invitation a été acceptée"
+  }
+}

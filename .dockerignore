@@ -1,0 +1,28 @@
+# Version Control
+.git
+.gitignore
+
+# Docker & CI
+Dockerfile*
+docker-compose*
+bitbucket-pipelines.yml
+
+# Logs and System Files
+*.log
+.DS_Store
+Thumbs.db
+
+# Global Ignores
+node_modules
+npm-debug.log
+
+# Client Component
+client/node_modules
+client/dist
+
+# Server Component
+server/node_modules
+server/dist
+
+.env
+.env.local

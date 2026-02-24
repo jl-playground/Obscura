@@ -1,0 +1,6 @@
+{
+  # prettier-ignore GraphQL long Text
+  addReaction(input:{superLongInputFieldName:"MDU6SXNzdWUyMzEzOTE1NTE=",content:HOORAY}) {
+    reaction {content}
+  }
+}

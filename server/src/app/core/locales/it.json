@@ -1,0 +1,148 @@
+{
+  "email": "E-mail:",
+  "evosys": "EvoSys AG",
+  "supportRequest": "Richiesta di supporto",
+  "displayEvosys": "Intervento da EvoSys",
+  "goodDay": "Buon giorno",
+  "general": {
+    "alarm": "allarme",
+    "alarmsheet": "Scheda di allarme"
+  },
+  "alarmEmail": {
+    "text1": "In appendice si trova la scheda di allarme per l'allarme"
+  },
+  "layerEmail": {
+    "subjectString": "Intervento: Servizio mappe",
+    "text": "Servizio mappe riuscito con successo."
+  },
+  "reportEmail": {
+    "subjectString": "Intervento: Protocollo",
+    "text": "Il protocollo è stato creato con successo."
+  },
+  "formEmail": {
+    "subjectString": "Intervento: Modulo",
+    "text": "Il Modulo è stato creato con successo."
+  },
+  "organizationAccessEmail": {
+    "subjectString": "Intervento: Codice di accesso",
+    "text": "Codice di accesso"
+  },
+  "partial": {
+    "footer": "Il nostro team di assistenza è qui per voi!"
+  },
+  "alarmPdf": {
+    "deploymentOrder": "Ordine di distribuzione",
+    "calendar": "Calendario",
+    "keyword": "Parola chiave di dispiegamento",
+    "text": "Testo di spiegamento",
+    "address": "Indirizzo di spiegamento",
+    "time": "Ora di spiegamento",
+    "tickersAndTexts": "Tickers / Testi"
+  },
+  "supportEmail": {
+    "organization": "Organizzazione:",
+    "organizations": "Organizzazioni:",
+    "organizationId": "Identificazione dell'organizzazione",
+    "userId": "Id utente",
+    "url": "URL:",
+    "browser": "Browser:",
+    "ip": "IP:",
+    "os": "Sistema operativo:",
+    "message": "Messaggio:"
+  },
+  "quotaEmail": {
+    "title1": "Intervento: ",
+    "title2": " il ",
+    "title3": "-Limite raggiunto",
+    "sms": "SMS",
+    "alarm": "allarme",
+    "alarms": "allarmi",
+    "alarmsOf": "alarms",
+    "text1": "Sei registrato in Intervento come amministratore della tua organizzazione, pertanto ricevi questo messaggio automatico da parte nostra",
+    "text2": "Questo messaggio è per informarvi che ",
+    "text3": " dal tuo iscritto",
+    "text4": "La quota in Intervento è stata raggiunta",
+    "text5": "In totale, nel periodo corrente, ",
+    "text6": " elaborato da Intervento. L'attuale prenotazione ",
+    "text7": "La versione del servizio include una quota annuale di ",
+    "text8": "Quando il limite è raggiunto, non è più possibile ",
+    "text9": " saranno elaborati più nel periodo corrente. Volete regolare la versione prenotata di Intervento? È sufficiente contattare il nostro team di assistenza."
+  },
+  "quotaSupport": {
+    "receiver": "Ricevitore:",
+    "organization": "Organizzazione:",
+    "version": "Versione",
+    "utilization": "Utilizzazione",
+    "usage": "Utilizzo",
+    "limit": "Limite"
+  },
+  "footer": {
+    "text1": "Il nostro team di supporto è a tua disposizione!"
+  },
+  "location": {
+    "mainLocation": "Posizione principale"
+  },
+  "object": {
+    "point": "Punto",
+    "linestring": "Linea",
+    "polygon": "Poligono",
+    "category1": "Categorie 1",
+    "category2": "Categorie 2",
+    "category3": "Categorie 3",
+    "floriplan": {
+      "objectOfUse": "Oggetto di utilizzo",
+      "training": "Oggetto di addestramento"
+    }
+  },
+  "folder": {
+    "floriplan": "FloriPlan",
+    "operationPlan": "Piani di operazione"
+  },
+  "protocol": {
+    "arrived": "Arrived",
+    "departed": "Departed",
+    "text": "Testo",
+    "input": "Ingresso",
+    "datetime": "Data",
+    "uploaded": "Caricato",
+    "edited": "Modificato",
+    "close": "Chiuso",
+    "title": "Registro delle operazioni",
+    "open": "Aperto",
+    "postAlarming": "Allarme ritardato"
+  },
+  "form": {
+    "form": "modulo",
+    "title": "Titolo",
+    "content": "Contento"
+  },
+  "journal": {
+    "create": {
+      "entry": "Voce creata",
+      "order": "Ordine creato"
+    },
+    "finalize": {
+      "order": "Ordine completato"
+    }
+  },
+  "dataField": {
+    "inputText": "Testo a una riga",
+    "textField": "Testo multilinea",
+    "checkbox": "Casella di controllo",
+    "radioButton": "Pulsanti radio",
+    "selectList": "Elenco di selezione",
+    "inputNumber": {
+      "number": "Number/integer",
+      "decimal": "Numeri in virgola mobile"
+    },
+    "date": "Date",
+    "time": "ora",
+    "calendar": "data + ora",
+    "signature": "Firma",
+    "incident": "Intervento"
+  },
+  "invitation": {
+    "request": "Richiesta di invito",
+    "accepted": "L'invito è stato accettato"
+  }
+}

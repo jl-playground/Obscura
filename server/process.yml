@@ -1,0 +1,13 @@
+apps:
+  - name: "argus-server"
+    script: index.js
+    node_args: --max_old_space_size=4000
+    watch: false
+    instances: 4
+    exec_mode: cluster
+    merge_logs: true
+    error_file: error-server.log
+    out_file: app-server.log
+    log_file: combined-server.log
+    log_date_format: DD/MM/YYYY HH:mm:ss
+    exp_backoff_restart_delay: 100
