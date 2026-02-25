@@ -1,9 +1,9 @@
-import cookieParser from 'cookie-parser';
+// import cookieParser from 'cookie-parser';
 import express from 'express';
-import helmet from 'helmet';
-import morgan from 'morgan';
+// import helmet from 'helmet';
+// import morgan from 'morgan';
 
-import SSOAuthenticationMiddleware from '@/app/core/middlewares/SSOAuthenticationMiddleware';
+// import SSOAuthenticationMiddleware from '@/app/core/middlewares/SSOAuthenticationMiddleware';
 import Routes from '@/app/core/routes';
 
 import type { Application } from 'express';
@@ -20,7 +20,7 @@ export default class Server {
 
   private port: number;
 
-  private bodyLimit = '500mb';
+  // private bodyLimit = '500mb';
 
   private constructor(port: number) {
     this.app = express();
@@ -51,10 +51,10 @@ export default class Server {
   // Private Methods
   private initialize(): void {
     try {
-      this.initializeSecurity();
+      // this.initializeSecurity();
 
       // SSO Middleware
-      SSOAuthenticationMiddleware.getInstance(this.app);
+      // SSOAuthenticationMiddleware.getInstance(this.app);
 
       this.initializeMiddlewares();
 
@@ -69,22 +69,22 @@ export default class Server {
    * Initialize Basic Security Headers
    * Removed CSP and complex browser directives as this is S2S.
    */
-  private initializeSecurity(): void {
-    this.app.disable('x-powered-by');
-    this.app.use(helmet.hidePoweredBy());
-    this.app.use(helmet.frameguard({ action: 'deny' }));
-    this.app.use(helmet.xssFilter());
-    this.app.use(helmet.noSniff());
-  }
+  // private initializeSecurity(): void {
+  //   this.app.disable('x-powered-by');
+  //   this.app.use(helmet.hidePoweredBy());
+  //   this.app.use(helmet.frameguard({ action: 'deny' }));
+  //   this.app.use(helmet.xssFilter());
+  //   this.app.use(helmet.noSniff());
+  // }
 
   /**
    * Initialize standard middlewares (Morgan, BodyParser, CookieParser)
    */
   private initializeMiddlewares(): void {
-    this.app.use(morgan('combined'));
-    this.app.use(express.urlencoded({ limit: this.bodyLimit, extended: true }));
-    this.app.use(express.json({ limit: this.bodyLimit }));
-    this.app.use(cookieParser());
+    // this.app.use(morgan('combined'));
+    this.app.use(express.urlencoded({ limit: '500mb', extended: true }));
+    this.app.use(express.json({ limit: '500mb' }));
+    // this.app.use(cookieParser());
   }
 
   // Getters and Setters

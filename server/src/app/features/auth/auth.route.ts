@@ -13,7 +13,7 @@ export default class AuthRoute {
 
   private readonly controller: AuthController;
 
-  private readonly path = '/api/auth';
+  private readonly path = '/auth';
 
   private constructor(app: Application) {
     this.app = app;

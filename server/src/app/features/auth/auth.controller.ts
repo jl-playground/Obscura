@@ -8,6 +8,7 @@ export default class AuthController {
 
   public register = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
+      console.log('Received registration request:', req.body);
       const result = await this.authService.register(req.body as RegisterDto);
 
       res.status(201).json({

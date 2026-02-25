@@ -1,14 +1,17 @@
-import { Router, Express } from 'express';
-import ChatController from './chat.controller';
+import { Router } from 'express';
+
 import { AuthMiddleware } from '@/app/core/middleware/auth.middleware';
-import {
-  validateSendMessage,
-  validateGetMessages,
-} from './chat.validator';
+
+import ChatController from './chat.controller';
+import { validateSendMessage, validateGetMessages } from './chat.validator';
+
+import type { Express } from 'express';
 
 export default class ChatRoute {
   private static instance: ChatRoute;
+
   private router: Router;
+
   private controller: ChatController;
 
   private constructor(app: Express) {
@@ -27,24 +30,16 @@ export default class ChatRoute {
 
   private registerRoutes(): void {
     // All routes require authentication
-    this.router.post(
-      '/message',
-      AuthMiddleware.authenticate,
-      validateSendMessage,
-      (req, res, next) => this.controller.sendMessage(req, res, next)
+    this.router.post('/message', AuthMiddleware.authenticate, validateSendMessage, async (req, res, next) =>
+      this.controller.sendMessage(req, res, next),
     );
 
-    this.router.get(
-      '/messages',
-      AuthMiddleware.authenticate,
-      validateGetMessages,
-      (req, res, next) => this.controller.getMessages(req, res, next)
+    this.router.get('/messages', AuthMiddleware.authenticate, validateGetMessages, async (req, res, next) =>
+      this.controller.getMessages(req, res, next),
     );
 
-    this.router.get(
-      '/rooms',
-      AuthMiddleware.authenticate,
-      (req, res, next) => this.controller.getRoomList(req, res, next)
+    this.router.get('/rooms', AuthMiddleware.authenticate, async (req, res, next) =>
+      this.controller.getRoomList(req, res, next),
     );
   }
 

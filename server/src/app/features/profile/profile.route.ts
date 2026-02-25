@@ -7,7 +7,7 @@ import { ProfileValidator } from './profile.validator';
 
 import type { Express } from 'express';
 
-export class ProfileRoute {
+export default class ProfileRoute {
   private static instance: ProfileRoute;
 
   private router: Router;
@@ -55,5 +55,3 @@ export class ProfileRoute {
     this.router.delete('/me', AuthMiddleware.authenticate, this.controller.deleteMyProfile.bind(this.controller));
   }
 }
-
-export default ProfileRoute;

@@ -9,7 +9,7 @@ import UserRepository from '../user/user.repository';
 
 export default class AuthService {
   // Get our custom repositories
-  private userRepository = UserRepository;
+  private userRepository = new UserRepository();
 
   private profileRepository = ProfileRepository;
 
@@ -24,6 +24,7 @@ export default class AuthService {
     console.log(`Registering user with email: ${dto.email}`);
 
     const existingUser = await this.userRepository.findByEmail(dto.email);
+    console.log(`Existing user check for email ${dto.email}: ${existingUser ? 'Found' : 'Not found'}`);
     if (existingUser) {
       throw new Error('A user with this email already exists.');
     }

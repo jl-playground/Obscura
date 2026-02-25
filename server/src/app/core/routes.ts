@@ -1,11 +1,12 @@
-import type { Application, Express } from 'express';
 import AuthRoute from '@/app/features/auth/auth.route';
-import UserRoute from '@/app/features/user/user.route';
-import ProfileRoute from '@/app/features/profile/profile.route';
-import ConnectionRoute from '@/app/features/connection/connection.route';
-import QuestionRoute from '@/app/features/question/question.route';
 import ChatRoute from '@/app/features/chat/chat.route';
+import ConnectionRoute from '@/app/features/connection/connection.route';
 import MatchingRoute from '@/app/features/matching/matching.route';
+import ProfileRoute from '@/app/features/profile/profile.route';
+import QuestionRoute from '@/app/features/question/question.route';
+import UserRoute from '@/app/features/user/user.route';
+
+import type { Application, Express } from 'express';
 
 export default class Routes {
   private static instance: Routes;

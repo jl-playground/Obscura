@@ -1,6 +1,8 @@
-import Server from '@/server';
 import 'dotenv/config';
+import Database from '@/app/core/database/database';
+import Server from '@/server';
 
-const server = Server.getInstance(3001);
+Database.getInstance();
+const server = Server.getInstance(3000);
 
 server.start();

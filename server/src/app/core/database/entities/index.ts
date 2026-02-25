@@ -3,9 +3,10 @@ import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
 import { DataTypes, Sequelize } from 'sequelize';
-import type { Model, ModelStatic } from 'sequelize';
 
 import rawConfig from '../config/config.cjs';
+
+import type { Model, ModelStatic } from 'sequelize';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -27,8 +28,10 @@ const db: any = {};
 let sequelize: Sequelize;
 
 if (config.use_env_variable) {
+  console.log(`Using environment variable for database connection: ${config.use_env_variable}`);
   sequelize = new Sequelize(process.env[config.use_env_variable] as string, config);
 } else {
+  console.log(`Using direct configuration for database connection: ${config.database}`);
   sequelize = new Sequelize(config.database, config.username, config.password, config);
 }
 

@@ -17,6 +17,7 @@ export default class UserRepository {
   }
 
   public async findByEmail(email: string): Promise<User | null> {
+    console.log(`Searching for user with email: ${email}`);
     return this.models.User.findOne({
       where: { email },
     });

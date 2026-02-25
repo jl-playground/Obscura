@@ -7,7 +7,7 @@ import { ConnectionValidator } from './connection.validator';
 
 import type { Express } from 'express';
 
-export class ConnectionRoute {
+export default class ConnectionRoute {
   private static instance: ConnectionRoute;
 
   private router: Router;
@@ -53,5 +53,3 @@ export class ConnectionRoute {
     );
   }
 }
-
-export default ConnectionRoute;

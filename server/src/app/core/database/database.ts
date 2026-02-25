@@ -1,7 +1,7 @@
 import db from './entities';
 import Connection from './entities/connection.entity';
-import Profile from './entities/profile.entity';
 import DailyBatch from './entities/dailyBatch.entity';
+import Profile from './entities/profile.entity';
 import User from './entities/user.entity';
 import UserAnswer from './entities/userAnswer.entity';
 
